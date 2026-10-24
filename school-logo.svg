@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">R.M. Gurukul Bal Vidya Mandir logo</title>
+  <desc id="desc">Circular emblem with an open book and light bulb, representing education and knowledge.</desc>
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#7f1e2d"/>
+      <stop offset="100%" stop-color="#521924"/>
+    </radialGradient>
+    <linearGradient id="inner" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f2ebd7"/>
+      <stop offset="100%" stop-color="#e7dcc0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.20"/>
+    </filter>
+  </defs>
+
+  <circle cx="400" cy="400" r="360" fill="url(#bg1)"/>
+  <circle cx="400" cy="400" r="312" fill="url(#inner)" stroke="#d7b876" stroke-width="10"/>
+
+  <g opacity="0.9" stroke="#d9b66d" stroke-width="3" fill="none">
+    <path d="M120 400c0-155 123-278 280-278s280 123 280 278-123 278-280 278S120 555 120 400Z"/>
+    <path d="M160 400c0-134 110-244 240-244s240 110 240 244-110 244-240 244S160 534 160 400Z"/>
+  </g>
+
+  <g fill="none" stroke="#d9b66d" stroke-width="3" opacity="0.9">
+    <path d="M170 240c26-28 49-40 72-40 20 0 32 8 50 20"/>
+    <path d="M630 240c-26-28-49-40-72-40-20 0-32 8-50 20"/>
+    <path d="M170 560c26 28 49 40 72 40 20 0 32-8 50-20"/>
+    <path d="M630 560c-26 28-49 40-72 40-20 0-32-8-50-20"/>
+    <path d="M246 180c18-20 48-32 76-32 26 0 44 8 66 24"/>
+    <path d="M554 180c-18-20-48-32-76-32-26 0-44 8-66 24"/>
+    <path d="M246 620c18 20 48 32 76 32 26 0 44-8 66-24"/>
+    <path d="M554 620c-18 20-48 32-76 32-26 0-44-8-66-24"/>
+  </g>
+
+  <g stroke="#283d69" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M310 430l-40-95h28l35 84"/>
+    <path d="M490 430l40-95h-28l-35 84"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <g transform="translate(0,0)">
+      <path d="M250 500c0-96 96-174 150-174 52 0 150 78 150 174v18H250v-18Z" fill="#f8f2e7" stroke="#233c68" stroke-width="6"/>
+      <path d="M400 330c-10 0-25 8-39 22l-15 18 23 12 31 88h18l31-88 23-12-15-18c-14-14-29-22-39-22h-18Z" fill="#f5f0e5" stroke="#233c68" stroke-width="5"/>
+      <circle cx="400" cy="310" r="56" fill="none" stroke="#233c68" stroke-width="5"/>
+      <path d="M400 236v-42M400 386v42M344 310h-42M458 310h42" stroke="#233c68" stroke-width="4" stroke-linecap="round"/>
+      <g fill="none" stroke="#233c68" stroke-width="4" stroke-linecap="round">
+        <path d="M320 310c18-18 38-27 80-27s62 9 80 27"/>
+      </g>
+    </g>
+
+    <g transform="translate(0,10)">
+      <path d="M286 390c28-20 58-30 114-30 35 0 71 7 104 30v100H286V390Z" fill="#fffdf8" stroke="#233c68" stroke-width="5"/>
+      <path d="M286 390c26 8 55 12 84 12 31 0 71-6 100-18 25 11 58 18 96 18v100H286V390Z" fill="#e9edf8" opacity="0.75"/>
+      <path d="M286 390l114 54 114-54" fill="none" stroke="#233c68" stroke-width="5"/>
+      <path d="M400 444v50" stroke="#233c68" stroke-width="5"/>
+      <g fill="none" stroke="#233c68" stroke-width="4" stroke-linecap="round">
+        <path d="M332 420l68 33 68-33"/>
+      </g>
+    </g>
+  </g>
+
+  <g font-family="Georgia, serif" text-anchor="middle" fill="#1f3a62">
+    <text x="400" y="270" font-size="66" font-weight="700" letter-spacing="1.5">R.M. GURUKUL BAL VIDYA</text>
+    <text x="400" y="500" font-size="54" font-weight="700" letter-spacing="2">MANDIR KOLHUA</text>
+  </g>
+
+  <g transform="translate(400 400)" fill="none" stroke="#233c68" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0,-80C48,-30 53,20 0,60c-53,-40 -48,-90 0,-140Z" opacity="0.8"/>
+    <path d="M0,-130c-6 20-33 37-62 44"/>
+    <path d="M0,-130c6 20 33 37 62 44"/>
+    <path d="M-65,-88c18 18 31 42 36 66"/>
+    <path d="M65,-88c-18 18-31 42-36 66"/>
+  </g>
+</svg>
