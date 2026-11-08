@@ -92,7 +92,7 @@ We focus on students' overall development through learning, educational activiti
 document.getElementById('year').textContent=new Date().getFullYear();
 document.getElementById('admissionForm').addEventListener('submit',function(e){e.preventDefault();const n=document.getElementById('student').value.trim(),c=document.getElementById('class').value,g=document.getElementById('guardian').value.trim(),p=document.getElementById('phone').value.trim();document.getElementById('admissionOutput').textContent='डेमो: '+n+' की '+c+' में नामांकन पूछताछ दर्ज की गई (अभिभावक: '+g+')। मोबाइल नंबर '+p+'। यह जानकारी सर्वर पर नहीं भेजी गई है; वास्तविक सबमिशन के लिए सुरक्षित बैकएंड जोड़ना होगा।';});
 document.getElementById('resultBtn').addEventListener('click',function(){const r=document.getElementById('roll').value.trim(),c=document.getElementById('resultClass').value;document.getElementById('resultOutput').textContent=(!r||!c)?'कृपया रोल नंबर और कक्षा दोनों भरें।':'यह डेमो वेबसाइट है। रोल नंबर '+r+' ('+c+') का वास्तविक परिणाम उपलब्ध नहीं है, क्योंकि स्कूल का रिजल्ट डेटाबेस अभी जोड़ा नहीं गया है।';});
-</scr
+</script>
 <!-- School Navigation Menu -->
 <nav style="background:#123b70;padding:12px;text-align:center;">
   <div style="color:white;font-size:20px;font-weight:bold;margin-bottom:12px;">
@@ -107,7 +107,7 @@ document.getElementById('resultBtn').addEventListener('click',function(){const r
     <a href="#contact" style="background:white;color:#123b70;padding:10px 14px;text-decoration:none;border-radius:6px;">Contact</a>
   </div>
 </nav>
-ipt>
+
 
 <section id="gallery">
   <div class="section-head">
