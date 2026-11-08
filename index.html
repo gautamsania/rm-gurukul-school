@@ -80,6 +80,33 @@ We focus on students' overall development through learning, educational activiti
 <div class="notice"><h3>Quick Links / उपयोगी लिंक</h3><div class="notice-item">📄 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXuosJoAl7xysAGwnIuq_xYKSCrj4Apmts5gm-o-MdB8UdSw/viewform" target="_blank">
   Online Admission
 </div><div class="notice-item">📊 <a href="#results">Check Result / रिजल्ट देखें</a></div><div class="notice-item">🖼️ <a href="#gallery">School Gallery / फोटो गैलरी</a></div><div class="notice-item">☎️ <a href="#contact">Contact School / संपर्क करें</a></div></div></div></section>
+  
+<section id="student-dashboard" style="background:#f0f5ff;padding:35px 15px;text-align:center;">
+  <h2 style="color:#123b70;">🎓 Student Dashboard</h2>
+  <p>R.M. Gurukul Bal Vidya Mandir</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;max-width:900px;margin:auto;">
+
+    <a href="#admission" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📝<br>Admission</a>
+
+    <a href="#results" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📊<br>Online Result</a>
+
+    <a href="#notices" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📢<br>Notice Board</a>
+
+    <a href="#gallery" style="background:white;padding:22px;border-radius:12px;color:#123b70;">🖼️<br>Gallery</a>
+
+    <a href="#fees" style="background:white;padding:22px;border-radius:12px;color:#123b70;">💳<br>Fee Management</a>
+
+    <a href="#study" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📚<br>Online Study</a>
+
+    <a href="#homework" style="background:white;padding:22px;border-radius:12px;color:#123b70;">✍️<br>Homework</a>
+
+    <a href="#attendance" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📅<br>Attendance</a>
+
+    <a href="#teacher" style="background:white;padding:22px;border-radius:12px;color:#123b70;">👨‍🏫<br>Teacher Panel</a>
+
+  </div>
+</section>
 <section id="admission"><div class="section-head"><small>ADMISSIONS · नामांकन</small><h2>Online Admission Enquiry</h2><p>अभिभावक प्रारंभिक जानकारी भर सकते हैं। यह डेमो फॉर्म अभी डेटा को सर्वर पर जमा नहीं करता।</p></div>
 <div class="form-card"><h3>Admission Enquiry Form / नामांकन पूछताछ फॉर्म</h3><form id="admissionForm"><div class="form-grid"><div><label for="student">Student Name / विद्यार्थी का नाम *</label><input id="student" required placeholder="विद्यार्थी का पूरा नाम"></div><div><label for="class">Class Applying For / कक्षा *</label><select id="class" required><option value="">कक्षा चुनें</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div><div><label for="guardian">Parent/Guardian Name / अभिभावक का नाम *</label><input id="guardian" required placeholder="अभिभावक का नाम"></div><div><label for="phone">Mobile Number / मोबाइल नंबर *</label><input id="phone" type="tel" pattern="[0-9+\-\s]{10,15}" required placeholder="संपर्क नंबर"></div></div><div><label for="message">Message / अन्य जानकारी</label><textarea id="message" placeholder="पता या कोई सवाल (वैकल्पिक)"></textarea></div><button class="btn primary" type="submit">Submit Enquiry / जानकारी भेजें</button><div id="admissionOutput" class="result-output" aria-live="polite">फॉर्म जमा करने पर इस डेमो में आपके विवरण का सारांश दिखेगा।</div></form></div></section>
 <section class="tint" id="results"><div class="section-head"><small>STUDENT RESULTS · विद्यार्थी परिणाम</small><h2>Check Your Result / अपना रिजल्ट देखें</h2><p>।</p></div>
@@ -127,32 +154,6 @@ document.getElementById('resultBtn').addEventListener('click',function(){const r
   </div>
 </section>
 
-<section id="student-dashboard" style="background:#f0f5ff;padding:35px 15px;text-align:center;">
-  <h2 style="color:#123b70;">🎓 Student Dashboard</h2>
-  <p>R.M. Gurukul Bal Vidya Mandir</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;max-width:900px;margin:auto;">
-
-    <a href="#admission" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📝<br>Admission</a>
-
-    <a href="#results" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📊<br>Online Result</a>
-
-    <a href="#notices" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📢<br>Notice Board</a>
-
-    <a href="#gallery" style="background:white;padding:22px;border-radius:12px;color:#123b70;">🖼️<br>Gallery</a>
-
-    <a href="#fees" style="background:white;padding:22px;border-radius:12px;color:#123b70;">💳<br>Fee Management</a>
-
-    <a href="#study" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📚<br>Online Study</a>
-
-    <a href="#homework" style="background:white;padding:22px;border-radius:12px;color:#123b70;">✍️<br>Homework</a>
-
-    <a href="#attendance" style="background:white;padding:22px;border-radius:12px;color:#123b70;">📅<br>Attendance</a>
-
-    <a href="#teacher" style="background:white;padding:22px;border-radius:12px;color:#123b70;">👨‍🏫<br>Teacher Panel</a>
-
-  </div>
-</section>
 
 </body>
 </html>
