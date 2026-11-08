@@ -175,6 +175,58 @@ We focus on students' overall development through learning, educational activiti
     </article>
   </div>
   </section>
+  <section id="homework" class="tint">
+  <div class="section-head">
+    <small>HOMEWORK · गृहकार्य</small>
+    <h2>Homework / गृहकार्य</h2>
+    <p>Daily Homework for Students · विद्यार्थियों के लिए दैनिक गृहकार्य</p>
+  </div>
+
+  <div class="form-card">
+    <h3>Class-wise Homework / कक्षा के अनुसार गृहकार्य</h3>
+
+    <label for="homeworkClass">Select Class / कक्षा चुनें</label>
+    <select id="homeworkClass">
+      <option value="">Choose Class</option>
+      <option>Nursery</option>
+      <option>LKG</option>
+      <option>UKG</option>
+      <option>Class 1</option>
+      <option>Class 2</option>
+      <option>Class 3</option>
+      <option>Class 4</option>
+      <option>Class 5</option>
+      <option>Class 6</option>
+      <option>Class 7</option>
+      <option>Class 8</option>
+      <option>Class 9</option>
+      <option>Class 10</option>
+    </select>
+
+    <button class="btn primary" type="button"
+      onclick="showHomework()">View Homework / होमवर्क देखें</button>
+
+    <div id="homeworkOutput" class="result-output">
+      Select your class to view homework.
+      होमवर्क देखने के लिए अपनी कक्षा चुनें।
+    </div>
+  </div>
+</section>
+
+<script>
+function showHomework() {
+  const c = document.getElementById('homeworkClass').value;
+  const output = document.getElementById('homeworkOutput');
+
+  if (!c) {
+    output.textContent = 'कृपया अपनी कक्षा चुनें।';
+    return;
+  }
+
+  output.textContent =
+    c + ' का होमवर्क अभी शिक्षक द्वारा अपडेट नहीं किया गया है।';
+}
+</script>
 <section id="admission"><div class="section-head"><small>ADMISSIONS · नामांकन</small><h2>Online Admission Enquiry</h2><p>अभिभावक प्रारंभिक जानकारी भर सकते हैं। यह डेमो फॉर्म अभी डेटा को सर्वर पर जमा नहीं करता।</p></div>
 <div class="form-card"><h3>Admission Enquiry Form / नामांकन पूछताछ फॉर्म</h3><form id="admissionForm"><div class="form-grid"><div><label for="student">Student Name / विद्यार्थी का नाम *</label><input id="student" required placeholder="विद्यार्थी का पूरा नाम"></div><div><label for="class">Class Applying For / कक्षा *</label><select id="class" required><option value="">कक्षा चुनें</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select></div><div><label for="guardian">Parent/Guardian Name / अभिभावक का नाम *</label><input id="guardian" required placeholder="अभिभावक का नाम"></div><div><label for="phone">Mobile Number / मोबाइल नंबर *</label><input id="phone" type="tel" pattern="[0-9+\-\s]{10,15}" required placeholder="संपर्क नंबर"></div></div><div><label for="message">Message / अन्य जानकारी</label><textarea id="message" placeholder="पता या कोई सवाल (वैकल्पिक)"></textarea></div><button class="btn primary" type="submit">Submit Enquiry / जानकारी भेजें</button><div id="admissionOutput" class="result-output" aria-live="polite">फॉर्म जमा करने पर इस डेमो में आपके विवरण का सारांश दिखेगा।</div></form></div></section>
 <section class="tint" id="results"><div class="section-head"><small>STUDENT RESULTS · विद्यार्थी परिणाम</small><h2>Check Your Result / अपना रिजल्ट देखें</h2><p>।</p></div>
