@@ -384,14 +384,13 @@ document.getElementById('resultBtn').addEventListener('click',function(){const r
   </div>
 </section>
   <script type="module">
-    
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
   signOut
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-
 import {
   getFirestore,
   doc,
@@ -434,66 +433,12 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
       await signOut(auth);
       message.textContent = "Role Admin नहीं है। मिला: " + (role || "खाली");
     }
-
   } catch (error) {
     console.error("Admin Login Error:", error);
     message.textContent = "Login Error: " + error.code;
   }
 });
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
-  authDomain: "rmgurukul.firebaseapp.com",
-  projectId: "rmgurukul",
-  storageBucket: "rmgurukul.firebasestorage.app",
-  messagingSenderId: "973124619738",
-  appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-console.log("RM Gurukul Firebase Connected!");
-    document.getElementById("adminLoginBtn").addEventListener("click", async () => {
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
-  const message = document.getElementById("adminMessage");
-
-  try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    const userDoc = await getDoc(doc(db, "users", result.user.uid));
-console.log("Admin UID:", result.user.uid);
-console.log("User Document:", userDoc.exists(), userDoc.data());
-    if (userDoc.exists() && String(userDoc.data().Role || "").trim().toLowerCase() === "admin") {
-  message.textContent = "Admin Login Successful!";
-} else {
-  await signOut(auth);
-  message.textContent = "आपके पास Admin अनुमति नहीं है।";
-    }
-  message.textContent = "Admin Login Successful!";
-} else {
-  await signOut(auth);
-  message.textContent = "आपके पास Admin अनुमति नहीं है।";
-    }
-      
-  } catch (error) {
-    message.textContent = "Login असफल। Email और Password जाँचें।";
-  }
-});
   </script>
   <section id="admin-login" style="max-width:400px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;text-align:center;">
   <h2>Admin Login</h2>
