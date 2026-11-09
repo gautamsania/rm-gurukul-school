@@ -383,5 +383,25 @@ document.getElementById('resultBtn').addEventListener('click',function(){const r
     </div>
   </div>
 </section>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
+  authDomain: "rmgurukul.firebaseapp.com",
+  projectId: "rmgurukul",
+  storageBucket: "rmgurukul.firebasestorage.app",
+  messagingSenderId: "973124619738",
+  appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+console.log("RM Gurukul Firebase Connected!");
+  </script>
 </body>
 </html>
