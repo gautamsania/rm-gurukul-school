@@ -385,8 +385,17 @@ document.getElementById('resultBtn').addEventListener('click',function(){const r
 </section>
   <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
