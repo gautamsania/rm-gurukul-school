@@ -420,7 +420,7 @@ console.log("RM Gurukul Firebase Connected!");
     const result = await signInWithEmailAndPassword(auth, email, password);
     const userDoc = await getDoc(doc(db, "users", result.user.uid));
 
-    if (userDoc.exists() && userDoc.data().role === "admin") {
+    if (userDoc.exists() && String(userDoc.data().Role).toLowerCase() === "admin") {
       message.textContent = "Admin Login Successful!";
     } else {
       await signOut(auth);
