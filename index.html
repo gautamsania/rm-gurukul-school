@@ -427,6 +427,11 @@ console.log("User Document:", userDoc.exists(), userDoc.data());
   await signOut(auth);
   message.textContent = "आपके पास Admin अनुमति नहीं है।";
     }
+  message.textContent = "Admin Login Successful!";
+} else {
+  await signOut(auth);
+  message.textContent = "आपके पास Admin अनुमति नहीं है।";
+    }
       
   } catch (error) {
     message.textContent = "Login असफल। Email और Password जाँचें।";
