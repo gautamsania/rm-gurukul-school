@@ -452,5 +452,33 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
   <button id="adminLoginBtn" style="padding:12px 25px;background:#1565c0;color:white;border:0;border-radius:6px;">Login</button>
   <p id="adminMessage"></p>
   </section>
+  <section id="studentManagement" style="display:none;padding:25px;max-width:900px;margin:auto;">
+
+<h2>Student Management</h2>
+<p>R.M. Gurukul Bal Vidya Mandir</p>
+
+<hr>
+
+<h3>Add New Student</h3>
+
+<input id="studentName" placeholder="Student Name" style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="studentClass" placeholder="Class" style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="studentFather" placeholder="Father's Name" style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="studentMobile" placeholder="Mobile Number" style="width:100%;padding:12px;margin:6px 0;">
+
+<button id="addStudentBtn" style="padding:12px 20px;background:#1565c0;color:white;border:0;border-radius:6px;">
+Add Student
+</button>
+
+<hr>
+
+<h3>Student Records</h3>
+
+<div id="studentList">Loading Students...</div>
+
+  </section>
 </body>
 </html>
