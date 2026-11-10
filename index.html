@@ -678,8 +678,10 @@ async function loadStudents() {
 
       const info = document.createElement("p");
       info.textContent =
-        "Name: " + (data.Name || "") +
-        " | Class: " + (data.Class || "");
+  "Name: " + (data.Name || "") +
+  " | Class: " + (data.Class || "") +
+  " | Roll: " + (data.Roll || "") +
+  " | Father: " + (data.Father || "");
 
       const editBtn = document.createElement("button");
       editBtn.type = "button";
