@@ -487,7 +487,9 @@ if (passed) {
       SST: sst,
       Total: total,
       Percentage: Number(percentage),
-      createdAt: new Date()
+Grade: grade,
+Status: passed ? "Pass" : "Fail",
+createdAt: new Date()
     });
 
     document.getElementById("resultMessage").textContent =
