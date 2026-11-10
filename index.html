@@ -465,7 +465,16 @@ const db = getFirestore(app);
 
   const total = marks.reduce((sum, mark) => sum + mark, 0);
   const percentage = (total / 500 * 100).toFixed(2);
+const passed = marks.every(mark => mark >= 33);
 
+let grade = "Fail";
+
+if (passed) {
+  if (Number(percentage) >= 90) grade = "A+";
+  else if (Number(percentage) >= 80) grade = "A";
+  else if (Number(percentage) >= 60) grade = "B";
+  else if (Number(percentage) >= 40) grade = "C";
+}
   try {
     await addDoc(collection(db, "results"), {
       Name: name,
