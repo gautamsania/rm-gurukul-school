@@ -559,7 +559,12 @@ await loadStudents();
 
     snapshot.forEach((result) => {
       const data = result.data();
-
+if (
+  searchName &&
+  !(data.Name || "").toLowerCase().includes(searchName.toLowerCase())
+) {
+  return;
+}
       const item = document.createElement("div");
       item.style.cssText =
         "padding:15px;border:1px solid #ddd;border-radius:8px;margin:10px 0;";
