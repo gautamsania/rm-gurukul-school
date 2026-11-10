@@ -641,6 +641,21 @@ item.appendChild(printBtn);
     resultList.textContent = "Error: " + error.message;
   }
     }
+    document.getElementById("searchStudentBtn").onclick = async () => {
+  const name = document.getElementById("searchStudent").value.trim();
+
+  if (!name) {
+    alert("Student Name लिखें।");
+    return;
+  }
+
+  await loadResults(name);
+};
+
+document.getElementById("showAllResultsBtn").onclick = async () => {
+  document.getElementById("searchStudent").value = "";
+  await loadResults();
+};
 async function loadStudents() {
   const list = document.getElementById("studentList");
   list.replaceChildren();
