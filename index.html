@@ -441,7 +441,7 @@ const db = getFirestore(app);
   const name = document.getElementById("resultStudentName").value.trim();
   const studentClass = document.getElementById("resultClass").value.trim();
   const exam = document.getElementById("resultExam").value.trim();
-
+const resultCode = "RMG-" + crypto.randomUUID();
   const hindi = Number(document.getElementById("resultHindi").value);
   const english = Number(document.getElementById("resultEnglish").value);
   const math = Number(document.getElementById("resultMath").value);
