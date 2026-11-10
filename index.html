@@ -62,6 +62,29 @@ footer{background:#0a1d39;color:#d6e2f3;text-align:center;padding:22px 5%;font-s
 @media(max-width:850px){header{flex-wrap:wrap}nav{width:100%;gap:12px}.hero{grid-template-columns:1fr;padding-top:48px}.hero-card{display:none}.cards{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.top{font-size:12px}.stats{grid-template-columns:1fr;margin-top:0;padding-top:12px}.stat{padding:12px}.cards{grid-template-columns:1fr}.form-grid,.contact-grid{grid-template-columns:1fr}.hero{padding:45px 5%}.hero p{font-size:15px}section{padding:45px 5%}.brand p{font-size:11px}}
 </style>
+  <style>
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #resultManagement,
+  #resultManagement * {
+    visibility: visible;
+  }
+
+  #resultManagement {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  #resultManagement button {
+    display: none !important;
+  }
+}
+  </style>
 </head>
 <body>
 <div class="top"><span>📍 Kolhua, Shankarpur, Madhepura, Bihar</span><span>Hindi | English · Session 2026–27</span></div>
