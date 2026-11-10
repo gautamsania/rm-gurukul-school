@@ -443,7 +443,71 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
     message.textContent = "Login Error: " + error.code;
   }
 });
+async function loadStudents() {
+  const list = document.getElementById("studentList");
+  list.textContent = "Loading...";
 
+  try {
+    const snapshot = await getDocs(collection(db, "students"));
+    list.innerHTML = "";
+
+    snapshot.forEach((student) => {
+      const data = student.data();
+      const item = document.createElement("div");
+
+      item.style.padding = "12px";
+      item.style.borderBottom = "1px solid #ddd";
+      item.textContent =
+        "Name: " + (data.Name || "") +
+        " | Class: " + (data.Class || "");
+
+      list.appendChild(item);
+    });
+
+    if (snapshot.empty) {
+      list.textContent = "No Students Found";
+    }
+  } catch (error) {
+    console.error(error);
+    list.textContent = "Students load नहीं हुए।";
+  }
+}
+
+document.getElementById("addStudentBtn")
+.addEventListener("click", async () => {
+  const Name = document.getElementById("studentName").value.trim();
+  const Class = document.getElementById("studentClass").value.trim();
+  const Father = document.getElementById("studentFather").value.trim();
+  const Mobile = document.getElementById("studentMobile").value.trim();
+
+  if (!Name || !Class) {
+    alert("Student Name और Class भरना जरूरी है।");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "students"), {
+      Name,
+      Class,
+      Father,
+      Mobile,
+      createdAt: new Date()
+    });
+
+    alert("Student Added Successfully!");
+
+    document.getElementById("studentName").value = "";
+    document.getElementById("studentClass").value = "";
+    document.getElementById("studentFather").value = "";
+    document.getElementById("studentMobile").value = "";
+
+    await loadStudents();
+
+  } catch (error) {
+    console.error(error);
+    alert("Error: " + error.message);
+  }
+});
   </script>
   <section id="admin-login" style="max-width:400px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;text-align:center;">
   <h2>Admin Login</h2>
