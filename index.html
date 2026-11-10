@@ -754,6 +754,7 @@ document.getElementById("addStudentBtn")
 
   try {
     await addDoc(collection(db, "students"), {
+      Roll,
       Name,
       Class,
       Father,
