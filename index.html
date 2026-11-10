@@ -489,6 +489,7 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
       document.getElementById("studentManagement").style.display = "block";
 await loadStudents();
       document.getElementById("resultManagement").style.display = "block";
+      await loadResults();
     } else {
       await signOut(auth);
       message.textContent = "Role Admin नहीं है। मिला: " + (role || "खाली");
