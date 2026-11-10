@@ -477,6 +477,7 @@ if (passed) {
 }
   try {
     await addDoc(collection(db, "results"), {
+      ResultCode: resultCode,
       Name: name,
       Class: studentClass,
       Exam: exam,
