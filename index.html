@@ -447,11 +447,15 @@ await loadStudents();
 });
 async function loadStudents() {
   const list = document.getElementById("studentList");
-  list.textContent = "Loading...";
+  list.replaceChildren();
 
   try {
     const snapshot = await getDocs(collection(db, "students"));
-    list.innerHTML = "";
+
+    if (snapshot.empty) {
+      list.textContent = "No Students Found";
+      return;
+    }
 
     snapshot.forEach((student) => {
       const data = student.data();
@@ -459,22 +463,61 @@ async function loadStudents() {
 
       item.style.padding = "12px";
       item.style.borderBottom = "1px solid #ddd";
-      item.textContent =
+
+      const info = document.createElement("p");
+      info.textContent =
         "Name: " + (data.Name || "") +
         " | Class: " + (data.Class || "");
 
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "Edit";
+      editBtn.onclick = async () => {
+        const name = prompt("Student Name:", data.Name || "");
+        if (name === null) return;
+
+        const studentClass = prompt("Class:", data.Class || "");
+        if (studentClass === null) return;
+
+        if (!name.trim() || !studentClass.trim()) {
+          alert("Name और Class जरूरी हैं।");
+          return;
+        }
+
+        try {
+          await updateDoc(doc(db, "students", student.id), {
+            Name: name.trim(),
+            Class: studentClass.trim()
+          });
+          alert("Student Updated!");
+          await loadStudents();
+        } catch (e) {
+          alert("Update Error: " + e.message);
+        }
+      };
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.onclick = async () => {
+        if (!confirm("क्या आप यह Student Delete करना चाहते हैं?")) return;
+
+        try {
+          await deleteDoc(doc(db, "students", student.id));
+          alert("Student Deleted!");
+          await loadStudents();
+        } catch (e) {
+          alert("Delete Error: " + e.message);
+        }
+      };
+
+      item.append(info, editBtn, deleteBtn);
       list.appendChild(item);
     });
 
-    if (snapshot.empty) {
-      list.textContent = "No Students Found";
-    }
   } catch (error) {
     console.error(error);
     list.textContent = "Students load नहीं हुए।";
   }
 }
-
 document.getElementById("addStudentBtn")
 .addEventListener("click", async () => {
   const Name = document.getElementById("studentName").value.trim();
