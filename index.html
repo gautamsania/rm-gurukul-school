@@ -522,6 +522,17 @@ await loadStudents();
     message.textContent = "Login Error: " + error.code;
   }
 });
+    function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char];
+  });
+    }
     async function loadResults() {
   const resultList = document.getElementById("resultList");
   resultList.innerHTML = "Loading Results...";
