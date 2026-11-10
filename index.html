@@ -414,6 +414,58 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+    document.getElementById("saveResultBtn").onclick = async () => {
+  const name = document.getElementById("resultStudentName").value.trim();
+  const studentClass = document.getElementById("resultClass").value.trim();
+  const exam = document.getElementById("resultExam").value.trim();
+
+  const hindi = Number(document.getElementById("resultHindi").value);
+  const english = Number(document.getElementById("resultEnglish").value);
+  const math = Number(document.getElementById("resultMath").value);
+  const science = Number(document.getElementById("resultScience").value);
+  const sst = Number(document.getElementById("resultSST").value);
+
+  const marksInputs = ["resultHindi", "resultEnglish", "resultMath", "resultScience", "resultSST"];
+
+  if (!name || !studentClass || !exam ||
+      marksInputs.some(id => document.getElementById(id).value === "")) {
+    alert("सभी जानकारी भरें।");
+    return;
+  }
+
+  const marks = [hindi, english, math, science, sst];
+
+  if (marks.some(mark => !Number.isInteger(mark) || mark < 0 || mark > 100)) {
+    alert("हर विषय के अंक 0 से 100 के बीच होने चाहिए।");
+    return;
+  }
+
+  const total = marks.reduce((sum, mark) => sum + mark, 0);
+  const percentage = (total / 500 * 100).toFixed(2);
+
+  try {
+    await addDoc(collection(db, "results"), {
+      Name: name,
+      Class: studentClass,
+      Exam: exam,
+      Hindi: hindi,
+      English: english,
+      Math: math,
+      Science: science,
+      SST: sst,
+      Total: total,
+      Percentage: Number(percentage),
+      createdAt: new Date()
+    });
+
+    document.getElementById("resultMessage").textContent =
+      "Result Successfully Saved! Total: " + total +
+      "/500, Percentage: " + percentage + "%";
+
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+};
 
 document.getElementById("adminLoginBtn").addEventListener("click", async () => {
   const email = document.getElementById("adminEmail").value.trim();
@@ -436,6 +488,7 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
       message.textContent = "Admin Login Successful!";
       document.getElementById("studentManagement").style.display = "block";
 await loadStudents();
+      document.getElementById("resultManagement").style.display = "block";
     } else {
       await signOut(auth);
       message.textContent = "Role Admin नहीं है। मिला: " + (role || "खाली");
@@ -596,6 +649,48 @@ Add Student
 <h3>Student Records</h3>
 
 <div id="studentList">Loading Students...</div>
+
+  </section>
+  <section id="resultManagement" style="display:none;padding:25px;max-width:900px;margin:auto;">
+
+<h2>📊 Result Management</h2>
+<p>R.M. Gurukul Bal Vidya Mandir</p>
+
+<hr>
+
+<h3>Add Student Result</h3>
+
+<input id="resultStudentName" placeholder="Student Name"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultClass" placeholder="Class"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultExam" placeholder="Exam Name"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultHindi" type="number" placeholder="Hindi Marks"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultEnglish" type="number" placeholder="English Marks"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultMath" type="number" placeholder="Math Marks"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultScience" type="number" placeholder="Science Marks"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<input id="resultSST" type="number" placeholder="Social Science Marks"
+style="width:100%;padding:12px;margin:6px 0;">
+
+<button id="saveResultBtn"
+style="padding:12px 20px;background:#2e7d32;color:white;border:0;border-radius:6px;">
+Save Result
+</button>
+
+<div id="resultMessage"></div>
+<div id="resultList"></div>
 
   </section>
 </body>
