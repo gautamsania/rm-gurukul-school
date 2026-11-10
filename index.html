@@ -499,6 +499,42 @@ await loadStudents();
     message.textContent = "Login Error: " + error.code;
   }
 });
+    async function loadResults() {
+  const resultList = document.getElementById("resultList");
+  resultList.innerHTML = "Loading Results...";
+
+  try {
+    const snapshot = await getDocs(collection(db, "results"));
+    resultList.innerHTML = "";
+
+    if (snapshot.empty) {
+      resultList.textContent = "No Results Found.";
+      return;
+    }
+
+    snapshot.forEach((result) => {
+      const data = result.data();
+
+      const item = document.createElement("div");
+      item.style.cssText =
+        "padding:15px;border:1px solid #ddd;border-radius:8px;margin:10px 0;";
+
+      const info = document.createElement("p");
+      info.textContent =
+        "Name: " + (data.Name || "") +
+        " | Class: " + (data.Class || "") +
+        " | Exam: " + (data.Exam || "") +
+        " | Total: " + (data.Total ?? 0) +
+        "/500 | Percentage: " + (data.Percentage ?? 0) + "%";
+
+      item.appendChild(info);
+      resultList.appendChild(item);
+    });
+
+  } catch (error) {
+    resultList.textContent = "Error: " + error.message;
+  }
+    }
 async function loadStudents() {
   const list = document.getElementById("studentList");
   list.replaceChildren();
