@@ -753,6 +753,42 @@ async function loadAttendanceStudents() {
     list.appendChild(item);
   }
 }
+    document.getElementById("saveAttendanceBtn").addEventListener("click", async () => {
+  const date = document.getElementById("attendanceDate").value;
+  const studentClass = document.getElementById("attendanceClass").value;
+  const message = document.getElementById("attendanceMessage");
+
+  if (!date || !studentClass) {
+    message.textContent = "पहले Date और Class चुनें।";
+    return;
+  }
+
+  try {
+    const selects = document.querySelectorAll("#attendanceList select");
+
+    if (selects.length === 0) {
+      message.textContent = "इस Class में विद्यार्थी नहीं मिले।";
+      return;
+    }
+
+    for (const select of selects) {
+      const studentId = select.dataset.studentId;
+
+      await setDoc(doc(db, "attendance", date + "_" + studentId), {
+        studentId: studentId,
+        Date: date,
+        Class: studentClass,
+        Status: select.value,
+        updatedAt: new Date()
+      }, { merge: true });
+    }
+
+    message.textContent = "Attendance सफलतापूर्वक Save हो गई!";
+  } catch (error) {
+    console.error(error);
+    message.textContent = "Attendance Save नहीं हुई। कृपया Firebase Rules जाँचें।";
+  }
+});
 async function loadStudents() {
   const list = document.getElementById("studentList");
   list.replaceChildren();
