@@ -616,6 +616,8 @@ printBtn.onclick = () => {
       </table>
       <h3>Total: ${data.Total ?? 0}/500</h3>
       <h3>Percentage: ${data.Percentage ?? 0}%</h3>
+      <h3>Grade: ${escapeHTML(data.Grade || "")}</h3>
+<h3>Status: ${escapeHTML(data.Status || "")}</h3>
     </body>
     </html>
   `);
