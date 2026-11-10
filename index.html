@@ -659,6 +659,53 @@ document.getElementById("showAllResultsBtn").onclick = async () => {
   document.getElementById("searchStudent").value = "";
   await loadResults();
 };
+    // Attendance System
+document.getElementById("attendanceDate").addEventListener("change", loadAttendanceStudents);
+document.getElementById("attendanceClass").addEventListener("change", loadAttendanceStudents);
+
+async function loadAttendanceStudents() {
+  const date = document.getElementById("attendanceDate").value;
+  const studentClass = document.getElementById("attendanceClass").value;
+  const list = document.getElementById("attendanceList");
+
+  list.replaceChildren();
+
+  if (!date || !studentClass) return;
+
+  const snapshot = await getDocs(collection(db, "students"));
+
+  for (const studentDoc of snapshot.docs) {
+    const student = studentDoc.data();
+
+    if (String(student.Class).trim() !== studentClass) continue;
+
+    const recordId = date + "_" + studentDoc.id;
+    const record = await getDoc(doc(db, "attendance", recordId));
+    const oldStatus = record.exists() ? record.data().Status : "Present";
+
+    const item = document.createElement("div");
+    item.style.padding = "12px";
+    item.style.borderBottom = "1px solid #ddd";
+
+    const name = document.createElement("strong");
+    name.textContent = (student.Name || "") + " (Roll: " + (student.Roll || "-") + ") ";
+
+    const select = document.createElement("select");
+    select.dataset.studentId = studentDoc.id;
+    select.style.padding = "8px";
+
+    ["Present", "Absent"].forEach(status => {
+      const option = document.createElement("option");
+      option.value = status;
+      option.textContent = status;
+      select.appendChild(option);
+    });
+
+    select.value = oldStatus;
+    item.append(name, select);
+    list.appendChild(item);
+  }
+}
 async function loadStudents() {
   const list = document.getElementById("studentList");
   list.replaceChildren();
