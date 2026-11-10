@@ -522,6 +522,7 @@ document.getElementById("adminLoginBtn").addEventListener("click", async () => {
     if (role === "admin") {
       message.textContent = "Admin Login Successful!";
       document.getElementById("studentManagement").style.display = "block";
+      document.getElementById("attendanceManagement").style.display = "block";
 await loadStudents();
       document.getElementById("resultManagement").style.display = "block";
       await loadResults();
