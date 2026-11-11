@@ -438,6 +438,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+    alert("Firebase Script Loaded");
     document.getElementById("saveResultBtn").onclick = async () => {
   const name = document.getElementById("resultStudentName").value.trim();
   const studentClass = document.getElementById("resultClass").value.trim();
