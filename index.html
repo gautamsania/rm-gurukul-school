@@ -438,6 +438,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+    console.log("FIREBASE MODULE STARTED");
+document.getElementById("adminLoginBtn").addEventListener("click", () => {
+  alert("Admin Button Click Working");
+});
     alert("Firebase Script Loaded");
     document.getElementById("saveResultBtn").onclick = async () => {
   const name = document.getElementById("resultStudentName").value.trim();
