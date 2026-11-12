@@ -443,7 +443,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-    alert("FIREBASE APP INITIALIZED");
+    document.getElementById("firebaseTest").textContent = "Firebase Started";
 const auth = getAuth(app);
 const db = getFirestore(app);
     console.log("FIREBASE MODULE STARTED");
