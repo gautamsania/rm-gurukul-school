@@ -793,6 +793,51 @@ $("logoutBtn").addEventListener("click",async()=>{
  $("adminPanel").style.display="none";
 });
 
+ 
+$("studentLoginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  message("studentLoginMessage","Login हो रहा है...");
+
+  try {
+    const email = $("studentEmail").value.trim();
+    const password = $("studentPassword").value;
+
+    const credential = await signInWithEmailAndPassword(
+      auth, email, password
+    );
+
+    const profile = await getUserProfile(credential.user);
+
+    if(!profile || profile.Role !== "Student" || !profile.StudentId){
+      await signOut(auth);
+      throw new Error("यह Firebase account Student नहीं है।");
+    }
+
+    currentStudent = profile;
+    $("studentLogin").style.display = "none";
+    $("adminLogin").style.display = "none";
+    $("studentDashboard").style.display = "block";
+
+    $("studentProfile").textContent =
+      "Student ID: " + profile.StudentId;
+
+    $("studentDashboard").scrollIntoView({behavior:"smooth"});
+
+    message("studentLoginMessage","Student Login सफल!",true);
+
+  } catch(error) {
+    message("studentLoginMessage","Login Error: " + error.message);
+  }
+});
+
+$("studentLogoutBtn").addEventListener("click", async () => {
+  await signOut(auth);
+  $("studentDashboard").style.display = "none";
+  $("studentLogin").style.display = "block";
+  $("adminLogin").style.display = "block";
+});
+
 function requireAdmin(){
  if(!auth.currentUser || !isAdmin){
   throw new Error("पहले Admin Login करें।");
