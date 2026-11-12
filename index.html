@@ -698,31 +698,69 @@ const message = (id, text, ok=false) => {
 
 let isAdmin = false;
 
-async function verifyAdmin(user){
- if(!user) return false;
- const userDoc = await getDoc(doc(db,"users",user.uid));
- return userDoc.exists() && userDoc.data().Role === "Admin";
+
+async function getUserProfile(user){
+  if(!user) return null;
+
+  const userDoc = await getDoc(doc(db,"users",user.uid));
+
+  if(!userDoc.exists()) return null;
+
+  return userDoc.data();
 }
 
+async function verifyAdmin(user){
+  const profile = await getUserProfile(user);
+  return profile && profile.Role === "Admin";
+}
+
+let currentStudent = null;
+
 onAuthStateChanged(auth, async user => {
- if(!user){
-  isAdmin=false;
-  $("adminPanel").style.display="none";
-  return;
- }
- try{
-  isAdmin=await verifyAdmin(user);
-  if(isAdmin){
-   $("adminPanel").style.display="block";
-   $("adminLogin").style.display="none";
-  }else{
-   await signOut(auth);
-   message("loginMessage","इस खाते को Admin अनुमति नहीं है।");
+  isAdmin = false;
+  currentStudent = null;
+
+  $("adminPanel").style.display = "none";
+  $("studentDashboard").style.display = "none";
+
+  if(!user){
+    $("adminLogin").style.display = "block";
+    $("studentLogin").style.display = "block";
+    return;
   }
- }catch(error){
-  message("loginMessage","Permission Error: "+error.message);
- }
+
+  try{
+    const profile = await getUserProfile(user);
+
+    if(!profile){
+      await signOut(auth);
+      return;
+    }
+
+    if(profile.Role === "Admin"){
+      isAdmin = true;
+      $("adminPanel").style.display = "block";
+      $("adminLogin").style.display = "none";
+      $("studentLogin").style.display = "none";
+    }
+    else if(profile.Role === "Student" && profile.StudentId){
+      currentStudent = profile;
+      $("adminLogin").style.display = "none";
+      $("studentLogin").style.display = "none";
+      $("studentDashboard").style.display = "block";
+      $("studentProfile").textContent =
+        "Student ID: " + profile.StudentId;
+    }
+    else{
+      await signOut(auth);
+      message("loginMessage","इस खाते की अनुमति नहीं है।");
+    }
+
+  }catch(error){
+    message("loginMessage","Permission Error: " + error.message);
+  }
 });
+
 
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
