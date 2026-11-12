@@ -415,7 +415,6 @@ WEBSITE UPDATE TEST 123
   <p id="firebaseTest">Waiting...</p>
   <script type="module">
 
-    console.log("MODULE FILE LOADING");
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 import {
   getAuth,
@@ -434,6 +433,9 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
+console.log("MODULE FILE LOADING");
+
+const firebaseConfig = {
 const firebaseConfig = {
   apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
   authDomain: "rmgurukul.firebaseapp.com",
