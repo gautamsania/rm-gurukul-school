@@ -770,7 +770,8 @@ $("resultForm").addEventListener("submit",async e=>{
   const grade=percentage>=90?"A+":percentage>=80?"A":percentage>=70?"B+":percentage>=60?"B":percentage>=50?"C":percentage>=33?"D":"F";
   await addDoc(collection(db,"results"),{
    ResultCode:$("resultCode").value.trim(),
-   Name:$("resultStudentName").value.trim(),
+StudentId:$("resultStudentId").value.trim(),
+Name:$("resultStudentName").value.trim(),
    Class:$("resultClass").value.trim(),
    Exam:$("resultExam").value.trim(),
    Hindi:marks[0],English:marks[1],Math:marks[2],
