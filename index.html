@@ -843,5 +843,17 @@ $("loadNoticesBtn").addEventListener("click",async()=>{
 
 loadPublicNotices();
 </script>
+ 
+<script>
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    const loader = document.getElementById("schoolLoader");
+    if (loader) {
+      loader.classList.add("hide");
+    }
+  }, 700);
+});
+</script>
+
 </body>
 </html>
