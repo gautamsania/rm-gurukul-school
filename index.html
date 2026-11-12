@@ -244,6 +244,70 @@ nav a{
 </head>
 
 <body>
+ 
+ 
+<div id="schoolLoader">
+  <img src="school-logo.jpg" alt="School Logo">
+  <h2>R.M. Gurukul</h2>
+  <p>Bal Vidya Mandir</p>
+  <div class="loader-bar"></div>
+  <small>Loading School Website...</small>
+</div>
+
+<style>
+#schoolLoader{
+ position:fixed;
+ inset:0;
+ z-index:99999;
+ background:linear-gradient(135deg,#071a3b,#174477);
+ color:white;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ transition:opacity .5s,visibility .5s;
+}
+#schoolLoader img{
+ width:100px;
+ height:100px;
+ object-fit:contain;
+ border-radius:50%;
+ background:white;
+ padding:6px;
+ border:3px solid #e5bd58;
+ animation:loaderPulse 1.5s infinite;
+}
+#schoolLoader h2{margin:18px 0 0}
+#schoolLoader p{margin:3px 0 20px;color:#f5d77a}
+.loader-bar{
+ width:150px;
+ height:4px;
+ background:#ffffff40;
+ border-radius:10px;
+ overflow:hidden;
+}
+.loader-bar:after{
+ content:"";
+ display:block;
+ height:100%;
+ width:45%;
+ background:#f5c451;
+ animation:loadingMove 1s infinite;
+}
+#schoolLoader small{margin-top:12px;color:#dbeafe}
+#schoolLoader.hide{
+ opacity:0;
+ visibility:hidden;
+}
+@keyframes loaderPulse{
+ 50%{transform:scale(1.07)}
+}
+@keyframes loadingMove{
+ from{transform:translateX(-100%)}
+ to{transform:translateX(230%)}
+}
+</style>
+
 
 <header>
  <div class="header-inner">
