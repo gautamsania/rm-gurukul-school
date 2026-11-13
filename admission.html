@@ -98,6 +98,70 @@ button{width:100%;padding:14px;border:0;border-radius:9px;background:#123c75;col
 <div id="applicationMessage" aria-live="polite"></div>
 </div>
 </div>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
+  authDomain: "rmgurukul.firebaseapp.com",
+  projectId: "rmgurukul",
+  storageBucket: "rmgurukul.firebasestorage.app",
+  messagingSenderId: "973124619738",
+  appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3",
+  measurementId: "G-QPL1BR7P8Y"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.getElementById("admissionForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const button = e.target.querySelector('button[type="submit"]');
+  const message = document.getElementById("applicationMessage");
+  button.disabled = true;
+  button.textContent = "Submitting...";
+
+  try {
+    const application = {
+      studentName: document.getElementById("studentName").value.trim(),
+      fatherName: document.getElementById("fatherName").value.trim(),
+      motherName: document.getElementById("motherName").value.trim(),
+      dob: document.getElementById("dob").value,
+      className: document.getElementById("className").value,
+      mobile: document.getElementById("mobile").value.trim(),
+      address: document.getElementById("address").value.trim(),
+      transactionId: document.getElementById("transactionId").value.trim(),
+      feeAmount: 1000,
+      paymentStatus: "Pending",
+      applicationStatus: "Pending",
+      createdAt: serverTimestamp()
+    };
+
+    const docRef = await addDoc(collection(db, "admissions"), application);
+
+    message.textContent =
+      "आवेदन सफलतापूर्वक जमा हुआ! Application Number: RMG-" +
+      docRef.id.slice(-8).toUpperCase() +
+      ". भुगतान की जाँच स्कूल प्रशासन करेगा।";
+
+    e.target.reset();
+
+  } catch (error) {
+    console.error(error);
+    message.textContent = "आवेदन जमा नहीं हुआ। कृपया दोबारा प्रयास करें।";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Submit Admission Application";
+  }
+});
+  </script>
 </body>
 </html>
 
