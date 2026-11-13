@@ -821,6 +821,7 @@ $("studentLoginForm").addEventListener("submit", async e => {
 
     $("studentProfile").textContent =
       "Student ID: " + profile.StudentId;
+   await loadStudentResults();
 
     $("studentDashboard").scrollIntoView({behavior:"smooth"});
 
