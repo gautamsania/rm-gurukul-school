@@ -1,1 +1,103 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Admission 2026-27 | R.M. Gurukul</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#17243b}
+header{background:linear-gradient(120deg,#071a3b,#174477);color:white;text-align:center;padding:28px 15px;border-bottom:4px solid #d5a83b}
+header img{width:85px;height:85px;object-fit:contain;background:white;border-radius:50%;padding:5px}
+header h1{font-size:23px;margin:12px 0 5px}
+header p{margin:5px;color:#f5d77a}
+.container{max-width:760px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;border-radius:16px;box-shadow:0 5px 22px #102a5618}
+h2{color:#123c75;text-align:center}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #ccd5e3;border-radius:9px;font-size:15px}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:#123c75;color:white;font-size:16px;font-weight:bold;margin-top:20px}
+.fee{background:#fff7df;border:1px solid #e5bd58;padding:15px;border-radius:10px;text-align:center;margin:20px 0}
+.qr{display:block;width:220px;max-width:100%;margin:15px auto;border:1px solid #ddd;border-radius:12px}
+.note{font-size:13px;color:#555;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+<img src="school-logo.jpg" alt="School Logo">
+<h1>R.M. Gurukul Bal Vidya Mandir</h1>
+<p>आर॰एम॰ गुरुकुल बाल विद्या मंदिर</p>
+<p>Kolhua, Shankarpur, Madhepura, Bihar</p>
+<h2 style="color:#f5d77a">ONLINE ADMISSION 2026–27</h2>
+</header>
+
+<div class="container">
+<div class="card">
+<h2>Admission Application Form</h2>
+
+<form id="admissionForm">
+
+<label>Student Name *</label>
+<input id="studentName" required>
+
+<label>Father's Name *</label>
+<input id="fatherName" required>
+
+<label>Mother's Name</label>
+<input id="motherName">
+
+<label>Date of Birth *</label>
+<input id="dob" type="date" required>
+
+<label>Admission Class *</label>
+<select id="className" required>
+<option value="">Select Class</option>
+<option>Nursery</option>
+<option>LKG</option>
+<option>UKG</option>
+<option>Class 1</option>
+<option>Class 2</option>
+<option>Class 3</option>
+<option>Class 4</option>
+<option>Class 5</option>
+<option>Class 6</option>
+<option>Class 7</option>
+<option>Class 8</option>
+<option>Class 9</option>
+<option>Class 10</option>
+</select>
+
+<label>Parent Mobile Number *</label>
+<input id="mobile" type="tel" pattern="[0-9]{10}" maxlength="10" required>
+
+<label>Address *</label>
+<textarea id="address" rows="3" required></textarea>
+
+<div class="fee">
+<h2>Admission Fee: ₹1,000</h2>
+<p>Scan QR Code to make payment</p>
+<img class="qr" src="admission-qr.png" alt="School Admission UPI QR Code">
+<p class="note">भुगतान करने से पहले QR पर दिखने वाले प्राप्तकर्ता का नाम जाँच लें।</p>
+</div>
+
+<label>UPI Transaction ID *</label>
+<input id="transactionId" required placeholder="Enter UPI Transaction ID">
+
+<p class="note">आवेदन जमा होने के बाद भुगतान की जाँच स्कूल प्रशासन करेगा। केवल Transaction ID डालने से भुगतान Verified नहीं होगा।</p>
+
+<label>
+<input type="checkbox" id="paymentDeclaration" required style="width:auto">
+मैंने ₹1,000 का भुगतान किया है।
+</label>
+
+<button type="submit">Submit Admission Application</button>
+</form>
+
+<div id="applicationMessage" aria-live="polite"></div>
+</div>
+</div>
+</body>
+</html>
+
