@@ -838,6 +838,67 @@ $("studentLogoutBtn").addEventListener("click", async () => {
   $("adminLogin").style.display = "block";
 });
 
+ 
+async function loadStudentResults(){
+  const resultBox = $("studentResult");
+
+  if(!currentStudent || !currentStudent.StudentId){
+    resultBox.textContent = "Student profile नहीं मिला।";
+    return;
+  }
+
+  resultBox.textContent = "Result लोड हो रहा है...";
+
+  try {
+    const q = query(
+      collection(db,"results"),
+      where("StudentId","==",currentStudent.StudentId)
+    );
+
+    const snapshot = await getDocs(q);
+
+    if(snapshot.empty){
+      resultBox.textContent = "अभी कोई Result उपलब्ध नहीं है।";
+      return;
+    }
+
+    resultBox.textContent = "";
+
+    snapshot.forEach(docSnap => {
+      const r = docSnap.data();
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const heading = document.createElement("h3");
+      heading.textContent = r.Exam || "Exam Result";
+      card.appendChild(heading);
+
+      [
+        ["Name",r.Name],
+        ["Class",r.Class],
+        ["Hindi",r.Hindi],
+        ["English",r.English],
+        ["Math",r.Math],
+        ["Science",r.Science],
+        ["SST",r.SST],
+        ["Total",r.Total],
+        ["Percentage",r.Percentage],
+        ["Grade",r.Grade],
+        ["Status",r.Status]
+      ].forEach(([label,value]) => {
+        const p = document.createElement("p");
+        p.textContent = label + ": " + (value ?? "-");
+        card.appendChild(p);
+      });
+
+      resultBox.appendChild(card);
+    });
+
+  } catch(error) {
+    resultBox.textContent = "Result Error: " + error.message;
+  }
+}
+
 function requireAdmin(){
  if(!auth.currentUser || !isAdmin){
   throw new Error("पहले Admin Login करें।");
