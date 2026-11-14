@@ -587,11 +587,6 @@ async function getUserProfile(user){
   return userDoc.data();
 }
 
-async function verifyAdmin(user){
-  const profile = await getUserProfile(user);
-  return profile && profile.Role === "Admin";
-}
-
 let currentStudent = null;
 
 onAuthStateChanged(auth, async user => {
