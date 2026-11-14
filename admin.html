@@ -739,6 +739,7 @@ onAuthStateChanged(auth,async user=>{
    $("adminLogin").style.display="none";
    $("adminPanel").style.display="block";
     updateDashboardStats();
+    $("adminPanel").style.display="grid";
   }else{
    await signOut(auth);
    message("loginMessage","इस खाते को Admin अनुमति नहीं है।");
@@ -768,6 +769,7 @@ $("loginForm").addEventListener("submit",async e=>{
   $("adminLogin").style.display="none";
   $("adminPanel").style.display="block";
    updateDashboardStats();
+   $("adminPanel").style.display="grid";
   $("adminPanel").scrollIntoView({behavior:"smooth"});
   message("loginMessage","Login सफल!",true);
  }catch(error){
