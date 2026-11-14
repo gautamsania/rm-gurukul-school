@@ -637,32 +637,6 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-$("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  $("loginBtn").disabled=true;
-  message("loginMessage","Login हो रहा है...");
-
-  try{
-    const email=$("adminEmail").value.trim();
-    const password=$("adminPassword").value;
-
-    const credential=await signInWithEmailAndPassword(auth,email,password);
-    const allowed=await verifyAdmin(credential.user);
-
-    if(!allowed){
-      await signOut(auth);
-      throw new Error("यह Firebase account Admin नहीं है।");
-    }
-
-    window.location.href="admin.html";
-
-  }catch(error){
-    message("loginMessage","Login Error: "+error.message);
-  }finally{
-    $("loginBtn").disabled=false;
-  }
-});
-
 
 $("studentLoginForm").addEventListener("submit", async e => {
   e.preventDefault();
