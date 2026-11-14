@@ -814,13 +814,7 @@ $("loginForm").addEventListener("submit",async e=>{
   }
 });
 
-$("logoutBtn").addEventListener("click",async()=>{
- await signOut(auth);
- $("adminLogin").style.display="block";
- $("adminPanel").style.display="none";
-});
 
- 
 $("studentLoginForm").addEventListener("submit", async e => {
   e.preventDefault();
 
