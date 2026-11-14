@@ -1232,6 +1232,46 @@ $("noticesTable").innerHTML=html;
  }catch(error){message("noticeMessage",error.message);}
 });
 
+ window.editNotice = async function(id) {
+  try {
+    requireAdmin();
+
+    const title = prompt("Enter updated notice title:");
+    if (title === null || !title.trim()) return;
+
+    const details = prompt("Enter updated notice details:");
+    if (details === null || !details.trim()) return;
+
+    await updateDoc(doc(db, "notices", id), {
+      title: title.trim(),
+      message: details.trim()
+    });
+
+    alert("Notice Updated Successfully!");
+    document.getElementById("loadNoticesBtn").click();
+    await loadPublicNotices();
+
+  } catch(error) {
+    alert("Update Error: " + error.message);
+  }
+};
+
+window.deleteNotice = async function(id) {
+  try {
+    requireAdmin();
+
+    if (!confirm("क्या आप यह Notice Delete करना चाहते हैं?")) return;
+
+    await deleteDoc(doc(db, "notices", id));
+
+    alert("Notice Deleted Successfully!");
+    document.getElementById("loadNoticesBtn").click();
+    await loadPublicNotices();
+
+  } catch(error) {
+    alert("Delete Error: " + error.message);
+  }
+};
 loadPublicNotices();
 </script>
  
