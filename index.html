@@ -1215,10 +1215,20 @@ $("loadNoticesBtn").addEventListener("click",async()=>{
   const snap=await getDocs(collection(db,"notices"));
   let html="<tr><th>Title</th><th>Message</th><th>Published</th><th>Action</th></tr>";
   snap.forEach(d=>{
-   const x=d.data();
-   html+=`<tr><td>${escapeHTML(x.title)}</td><td>${escapeHTML(x.message)}</td><td>${x.published?"Yes":"No"}</td></tr>`;
-  });
-  $("noticesTable").innerHTML=html;
+  const x=d.data();
+
+  html+=`<tr>
+    <td>${escapeHTML(x.title)}</td>
+    <td>${escapeHTML(x.message)}</td>
+    <td>${x.published?"Yes":"No"}</td>
+    <td>
+      <button type="button" onclick="editNotice('${d.id}')">Edit</button>
+      <button type="button" onclick="deleteNotice('${d.id}')">Delete</button>
+    </td>
+  </tr>`;
+});
+
+$("noticesTable").innerHTML=html;
  }catch(error){message("noticeMessage",error.message);}
 });
 
