@@ -730,13 +730,6 @@ async function loadStudentResults(){
   }
 }
 
-
-
-// Student records
-$("studentForm").addEventListener("submit",async e=>{
- e.preventDefault();
- try{
-
 function escapeHTML(value){
  return String(value??"").replace(/[&<>"']/g,c=>({
   "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
