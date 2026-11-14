@@ -1,1 +1,622 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel | R.M. Gurukul Bal Vidya Mandir</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f3f6fc;color:#253247;line-height:1.5}
+header{background:linear-gradient(120deg,#071a3b,#123c75,#b38b35);color:white;padding:20px 14px;text-align:center}
+header h1{font-size:clamp(20px,4vw,30px);margin:0}
+header p{margin:5px 0}
+.container{max-width:1100px;margin:25px auto;padding:0 14px}
+.card{background:white;border:1px solid #e5eaf3;border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 8px 25px #102a5615}
+h2,h3{color:#102a56}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;background:white}
+textarea{min-height:90px}
+form{display:grid;gap:11px}
+button,.btn{border:0;border-radius:8px;padding:11px 16px;font-weight:bold;cursor:pointer;background:#1769aa;color:white;font:inherit}
+button:disabled{opacity:.6;cursor:not-allowed}
+.btn-gold{background:#f5b942;color:#172b4d}
+.btn-red{background:#b42318}
+#adminPanel{display:none}
+.admin-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}
+.admin-tabs button{background:#eaf5ff;color:#102a56}
+.admin-tabs button.active{background:#102a56;color:white}
+.admin-page{display:none}
+.admin-page.active{display:block}
+.table-wrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;background:white;min-width:600px}
+th,td{padding:9px;border:1px solid #e2e8f0;text-align:left;vertical-align:top}
+th{background:#eaf5ff;color:#102a56}
+td button,td select{margin:3px;padding:7px;font-size:13px}
+.message{font-weight:bold;margin:10px 0;overflow-wrap:anywhere}
+.small{font-size:13px;color:#64748b}
+footer{text-align:center;background:#102a56;color:white;padding:20px;margin-top:30px}
+@media(max-width:600px){
+ .container{margin:15px auto}
+ .card{padding:13px}
+ .admin-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
+ .admin-tabs button{white-space:nowrap}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <h1>R.M. Gurukul Bal Vidya Mandir</h1>
+ <p>आर॰एम॰ गुरुकुल बाल विद्या मंदिर</p>
+ <p>Kolhua, Shankarpur, Madhepura, Bihar</p>
+ <strong>School Admin Portal</strong>
+</header>
+
+<main class="container">
+
+<section id="adminLogin" class="card">
+ <h2>Admin Login</h2>
+ <p class="small">केवल अधिकृत विद्यालय Admin लॉगिन करें।</p>
+ <form id="loginForm">
+  <input id="adminEmail" type="email" placeholder="Admin Email" autocomplete="username" required>
+  <input id="adminPassword" type="password" placeholder="Password" autocomplete="current-password" required>
+  <button type="submit" id="loginBtn">Login</button>
+ </form>
+ <p id="loginMessage" class="message" role="status"></p>
+</section>
+
+<section id="adminPanel">
+ <div class="card">
+  <h2>School Admin Dashboard</h2>
+  <p>विद्यालय प्रबंधन पोर्टल</p>
+  <button id="logoutBtn" class="btn-red" type="button">Logout</button>
+ </div>
+
+ <div class="admin-tabs">
+  <button class="active" data-page="studentsPage">Students</button>
+  <button data-page="resultsPage">Results</button>
+  <button data-page="feesPage">Fees</button>
+  <button data-page="attendancePage">Attendance</button>
+  <button data-page="noticesPage">Notices</button>
+  <button data-page="admissionsPage">Admissions</button>
+ </div>
+
+ <section class="card admin-page active" id="studentsPage">
+  <h3>Student Management</h3>
+  <form id="studentForm">
+   <input id="studentName" placeholder="Student Name" required>
+   <input id="studentClass" placeholder="Class" required>
+   <input id="studentFather" placeholder="Father Name">
+   <label>Date of Birth</label>
+   <input id="studentDOB" type="date" required>
+   <input id="studentRoll" placeholder="Roll Number">
+   <input id="studentMobile" placeholder="Parent Mobile">
+   <button type="submit">Save Student</button>
+  </form>
+  <p id="studentMessage" class="message"></p>
+  <button id="loadStudentsBtn" type="button" class="btn-gold">Load Students</button>
+  <div class="table-wrap"><table id="studentsTable"></table></div>
+ </section>
+
+ <section class="card admin-page" id="resultsPage">
+  <h3>Result Management</h3>
+  <form id="resultForm">
+   <input id="resultCode" placeholder="Unique Result Code" required>
+   <input id="resultStudentName" placeholder="Student Name" required>
+   <input id="resultStudentId" placeholder="Student Document ID" required>
+   <input id="resultClass" placeholder="Class" required>
+   <input id="resultExam" placeholder="Exam Name" required>
+   <label>Hindi Marks (0–100)</label><input id="markHindi" type="number" min="0" max="100" required>
+   <label>English Marks (0–100)</label><input id="markEnglish" type="number" min="0" max="100" required>
+   <label>Math Marks (0–100)</label><input id="markMath" type="number" min="0" max="100" required>
+   <label>Science Marks (0–100)</label><input id="markScience" type="number" min="0" max="100" required>
+   <label>SST Marks (0–100)</label><input id="markSST" type="number" min="0" max="100" required>
+   <button type="submit">Save Result</button>
+  </form>
+  <p id="resultMessage" class="message"></p>
+ </section>
+
+ <section class="card admin-page" id="feesPage">
+  <h3>Fee Management</h3>
+  <form id="feeForm">
+   <input id="feeStudentName" placeholder="Student Name" required>
+   <input id="feeClass" placeholder="Class" required>
+   <input id="feeAmount" type="number" min="0" placeholder="Amount (₹)" required>
+   <input id="feeMonth" placeholder="Month / Fee Type" required>
+   <select id="feeStatus">
+    <option value="Paid">Paid</option>
+    <option value="Pending">Pending</option>
+   </select>
+   <button type="submit">Save Fee Record</button>
+  </form>
+  <p id="feeMessage" class="message"></p>
+  <button id="loadFeesBtn" type="button" class="btn-gold">Load Fee Records</button>
+  <div class="table-wrap"><table id="feesTable"></table></div>
+ </section>
+
+ <section class="card admin-page" id="attendancePage">
+  <h3>Attendance Management</h3>
+  <form id="attendanceForm">
+   <input id="attendanceStudentId" placeholder="Student Document ID" required>
+   <input id="attendanceStudentName" placeholder="Student Name" required>
+   <input id="attendanceClass" placeholder="Class" required>
+   <label>Attendance Date</label>
+   <input id="attendanceDate" type="date" required>
+   <select id="attendanceStatus">
+    <option value="Present">Present</option>
+    <option value="Absent">Absent</option>
+   </select>
+   <button type="submit">Save Attendance</button>
+  </form>
+  <p class="small">Student Document ID, Students सूची में मिलेगा।</p>
+  <p id="attendanceMessage" class="message"></p>
+ </section>
+
+ <section class="card admin-page" id="noticesPage">
+  <h3>Notice Management</h3>
+  <form id="noticeForm">
+   <input id="noticeTitle" placeholder="Notice Title" required>
+   <textarea id="noticeText" placeholder="Notice Details" required></textarea>
+   <select id="noticePublished">
+    <option value="true">Publish Publicly</option>
+    <option value="false">Save as Unpublished</option>
+   </select>
+   <button type="submit">Save Notice</button>
+  </form>
+  <p id="noticeMessage" class="message"></p>
+  <button id="loadNoticesBtn" type="button" class="btn-gold">Load All Notices</button>
+  <div class="table-wrap"><table id="noticesTable"></table></div>
+ </section>
+
+ <section class="card admin-page" id="admissionsPage">
+  <h3>Admission Management</h3>
+  <button id="loadAdmissionsBtn" type="button">Load All Applications</button>
+  <p id="admissionsMessage" class="message"></p>
+  <div class="table-wrap">
+   <table id="admissionsTable">
+    <thead><tr>
+     <th>Application No.</th><th>Student Name</th><th>Father Name</th>
+     <th>Class</th><th>Mobile</th><th>Transaction ID</th>
+     <th>Payment Status</th><th>Admission Status</th><th>Action</th>
+    </tr></thead>
+    <tbody></tbody>
+   </table>
+  </div>
+ </section>
+</section>
+</main>
+
+<footer>
+ <strong>R.M. Gurukul Bal Vidya Mandir</strong>
+ <p>Kolhua, Shankarpur, Madhepura, Bihar</p>
+ <p>ज्ञान • अनुशासन • संस्कार</p>
+</footer>
+
+<script type="module">
+import {initializeApp}
+ from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import {
+ getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
+import {
+ getFirestore, doc, getDoc, collection, addDoc, getDocs,
+ setDoc, updateDoc, deleteDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
+ authDomain: "rmgurukul.firebaseapp.com",
+ projectId: "rmgurukul",
+ storageBucket: "rmgurukul.firebasestorage.app",
+ messagingSenderId: "973124619738",
+ appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3",
+ measurementId: "G-QPL1BR7P8Y"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+let isAdmin = false;
+
+function message(id,text,ok=false){
+ $(id).textContent=text;
+ $(id).style.color=ok?"green":"crimson";
+}
+
+function requireAdmin(){
+ if(!auth.currentUser || !isAdmin){
+  throw new Error("पहले Admin Login करें।");
+ }
+}
+
+async function verifyAdmin(user){
+ const userDoc=await getDoc(doc(db,"users",user.uid));
+ return userDoc.exists() && userDoc.data().Role==="Admin";
+}
+
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+// Login session और Admin role की जाँच
+onAuthStateChanged(auth,async user=>{
+ isAdmin=false;
+ $("adminPanel").style.display="none";
+ $("adminLogin").style.display="block";
+
+ if(!user) return;
+
+ try{
+  const allowed=await verifyAdmin(user);
+  if(allowed){
+   isAdmin=true;
+   $("adminLogin").style.display="none";
+   $("adminPanel").style.display="block";
+  }else{
+   await signOut(auth);
+   message("loginMessage","इस खाते को Admin अनुमति नहीं है।");
+  }
+ }catch(error){
+  message("loginMessage","Permission Error: "+error.message);
+ }
+});
+
+// Admin Login
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ $("loginBtn").disabled=true;
+ message("loginMessage","Login हो रहा है...");
+
+ try{
+  const email=$("adminEmail").value.trim();
+  const password=$("adminPassword").value;
+  const credential=await signInWithEmailAndPassword(auth,email,password);
+
+  if(!(await verifyAdmin(credential.user))){
+   await signOut(auth);
+   throw new Error("यह Firebase account Admin नहीं है।");
+  }
+
+  isAdmin=true;
+  $("adminLogin").style.display="none";
+  $("adminPanel").style.display="block";
+  $("adminPanel").scrollIntoView({behavior:"smooth"});
+  message("loginMessage","Login सफल!",true);
+ }catch(error){
+  message("loginMessage","Login Error: "+error.message);
+ }finally{
+  $("loginBtn").disabled=false;
+ }
+});
+
+// Logout
+$("logoutBtn").addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+  isAdmin=false;
+  $("adminPanel").style.display="none";
+  $("adminLogin").style.display="block";
+  $("loginForm").reset();
+ }catch(error){
+  alert("Logout Error: "+error.message);
+ }
+});
+
+// Dashboard tabs
+document.querySelectorAll(".admin-tabs button").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".admin-page").forEach(p=>p.classList.remove("active"));
+  button.classList.add("active");
+  $(button.dataset.page).classList.add("active");
+ });
+});
+
+// Student records
+$("studentForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  requireAdmin();
+  await addDoc(collection(db,"students"),{
+   Name:$("studentName").value.trim(),
+   Class:$("studentClass").value.trim(),
+   Father:$("studentFather").value.trim(),
+   DOB:$("studentDOB").value,
+   Roll:$("studentRoll").value.trim(),
+   Mobile:$("studentMobile").value.trim(),
+   createdAt:serverTimestamp()
+  });
+  message("studentMessage","Student Successfully Saved!",true);
+  e.target.reset();
+ }catch(error){message("studentMessage",error.message);}
+});
+
+$("loadStudentsBtn").addEventListener("click",async()=>{
+ try{
+  requireAdmin();
+  const snap=await getDocs(collection(db,"students"));
+  const table=$("studentsTable");
+  table.replaceChildren();
+
+  const head=document.createElement("tr");
+  ["Name","Class","Father","Roll","Document ID"].forEach(t=>{
+   const th=document.createElement("th");th.textContent=t;head.appendChild(th);
+  });
+  table.appendChild(head);
+
+  snap.forEach(d=>{
+   const x=d.data(),row=document.createElement("tr");
+   [x.Name,x.Class,x.Father,x.Roll,d.id].forEach(v=>{
+    const td=document.createElement("td");td.textContent=v||"-";row.appendChild(td);
+   });
+   table.appendChild(row);
+  });
+  message("studentMessage","Total Students: "+snap.size,true);
+ }catch(error){message("studentMessage",error.message);}
+});
+
+// Results
+$("resultForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  requireAdmin();
+  const marks=[
+   Number($("markHindi").value),Number($("markEnglish").value),
+   Number($("markMath").value),Number($("markScience").value),
+   Number($("markSST").value)
+  ];
+  if(marks.some(n=>!Number.isFinite(n)||n<0||n>100)){
+   throw new Error("हर विषय के अंक 0 से 100 के बीच होने चाहिए।");
+  }
+
+  const total=marks.reduce((a,b)=>a+b,0);
+  const percentage=Number((total/5).toFixed(2));
+  const status=marks.every(n=>n>=33)?"Pass":"Fail";
+  const grade=percentage>=90?"A+":percentage>=80?"A":percentage>=70?"B+":percentage>=60?"B":percentage>=50?"C":percentage>=33?"D":"F";
+
+  await addDoc(collection(db,"results"),{
+   ResultCode:$("resultCode").value.trim(),
+   StudentId:$("resultStudentId").value.trim(),
+   Name:$("resultStudentName").value.trim(),
+   Class:$("resultClass").value.trim(),
+   Exam:$("resultExam").value.trim(),
+   Hindi:marks[0],English:marks[1],Math:marks[2],
+   Science:marks[3],SST:marks[4],
+   Total:total,Percentage:percentage,Grade:grade,
+   Status:status,createdAt:serverTimestamp()
+  });
+
+  message("resultMessage","Result Saved! Total: "+total+"/500, Percentage: "+percentage+"%",true);
+  e.target.reset();
+ }catch(error){message("resultMessage",error.message);}
+});
+
+// Fees
+$("feeForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  requireAdmin();
+  await addDoc(collection(db,"fees"),{
+   studentName:$("feeStudentName").value.trim(),
+   Class:$("feeClass").value.trim(),
+   amount:Number($("feeAmount").value),
+   month:$("feeMonth").value.trim(),
+   status:$("feeStatus").value,
+   createdAt:serverTimestamp()
+  });
+  message("feeMessage","Fee Record Saved!",true);
+  e.target.reset();
+ }catch(error){message("feeMessage",error.message);}
+});
+
+$("loadFeesBtn").addEventListener("click",async()=>{
+ try{
+  requireAdmin();
+  const snap=await getDocs(collection(db,"fees"));
+  const table=$("feesTable");table.replaceChildren();
+  const head=document.createElement("tr");
+  ["Student","Class","Amount","Month","Status"].forEach(t=>{
+   const th=document.createElement("th");th.textContent=t;head.appendChild(th);
+  });
+  table.appendChild(head);
+
+  snap.forEach(d=>{
+   const x=d.data(),row=document.createElement("tr");
+   [x.studentName,x.Class,"₹"+Number(x.amount||0),x.month,x.status].forEach(v=>{
+    const td=document.createElement("td");td.textContent=v||"-";row.appendChild(td);
+   });
+   table.appendChild(row);
+  });
+  message("feeMessage","Total Fee Records: "+snap.size,true);
+ }catch(error){message("feeMessage",error.message);}
+});
+
+// Attendance
+$("attendanceDate").value=new Date().toISOString().slice(0,10);
+$("attendanceForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  requireAdmin();
+  const date=$("attendanceDate").value;
+  const studentId=$("attendanceStudentId").value.trim();
+  const studentSnap=await getDoc(doc(db,"students",studentId));
+  if(!studentSnap.exists()) throw new Error("Student Document ID नहीं मिला।");
+
+  await setDoc(doc(db,"attendance",date+"_"+studentId),{
+   studentId:studentId,
+   studentName:$("attendanceStudentName").value.trim(),
+   Date:date,
+   Class:$("attendanceClass").value.trim(),
+   Status:$("attendanceStatus").value,
+   updatedAt:serverTimestamp()
+  });
+  message("attendanceMessage","Attendance Saved!",true);
+ }catch(error){message("attendanceMessage",error.message);}
+});
+
+// Notices
+$("noticeForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  requireAdmin();
+  await addDoc(collection(db,"notices"),{
+   title:$("noticeTitle").value.trim(),
+   message:$("noticeText").value.trim(),
+   published:$("noticePublished").value==="true",
+   createdAt:serverTimestamp()
+  });
+  message("noticeMessage","Notice Saved!",true);
+  e.target.reset();
+ }catch(error){message("noticeMessage",error.message);}
+});
+
+async function loadNotices(){
+ requireAdmin();
+ const snap=await getDocs(collection(db,"notices"));
+ const table=$("noticesTable");
+ table.replaceChildren();
+
+ const head=document.createElement("tr");
+ ["Title","Message","Published","Action"].forEach(t=>{
+  const th=document.createElement("th");th.textContent=t;head.appendChild(th);
+ });
+ table.appendChild(head);
+
+ snap.forEach(d=>{
+  const x=d.data(),row=document.createElement("tr");
+  [x.title,x.message,x.published?"Yes":"No"].forEach(v=>{
+   const td=document.createElement("td");td.textContent=v||"-";row.appendChild(td);
+  });
+
+  const action=document.createElement("td");
+  const edit=document.createElement("button");
+  edit.type="button";edit.textContent="Edit";
+  edit.addEventListener("click",()=>editNotice(d.id,x));
+
+  const del=document.createElement("button");
+  del.type="button";del.textContent="Delete";del.className="btn-red";
+  del.addEventListener("click",()=>deleteNotice(d.id));
+
+  action.append(edit,del);row.appendChild(action);table.appendChild(row);
+ });
+ message("noticeMessage","Total Notices: "+snap.size,true);
+}
+
+$("loadNoticesBtn").addEventListener("click",async()=>{
+ try{await loadNotices();}
+ catch(error){message("noticeMessage",error.message);}
+});
+
+async function editNotice(id,data){
+ try{
+  requireAdmin();
+  const title=prompt("Enter updated notice title:",data.title||"");
+  if(title===null || !title.trim()) return;
+  const details=prompt("Enter updated notice details:",data.message||"");
+  if(details===null || !details.trim()) return;
+  const published=confirm("OK = Publicly Published | Cancel = Unpublished");
+
+  await updateDoc(doc(db,"notices",id),{
+   title:title.trim(),
+   message:details.trim(),
+   published:published
+  });
+  message("noticeMessage","Notice Updated Successfully!",true);
+  await loadNotices();
+ }catch(error){message("noticeMessage","Update Error: "+error.message);}
+}
+
+async function deleteNotice(id){
+ try{
+  requireAdmin();
+  if(!confirm("क्या आप यह Notice Delete करना चाहते हैं?")) return;
+  await deleteDoc(doc(db,"notices",id));
+  message("noticeMessage","Notice Deleted Successfully!",true);
+  await loadNotices();
+ }catch(error){message("noticeMessage","Delete Error: "+error.message);}
+}
+
+// Admission applications
+async function loadAdmissions(){
+ const msg=$("admissionsMessage");
+ const tbody=document.querySelector("#admissionsTable tbody");
+
+ try{
+  requireAdmin();
+  msg.textContent="Loading applications...";
+  tbody.replaceChildren();
+
+  const snap=await getDocs(collection(db,"admissions"));
+  if(snap.empty){
+   msg.textContent="अभी कोई आवेदन उपलब्ध नहीं है।";
+   return;
+  }
+
+  snap.forEach(item=>{
+   const data=item.data();
+   const row=document.createElement("tr");
+
+   const values=[
+    "RMG-"+item.id.slice(-8).toUpperCase(),
+    data.studentName,data.fatherName,data.className,
+    data.mobile,data.transactionId,
+    data.paymentStatus,data.applicationStatus
+   ];
+
+   values.forEach(value=>{
+    const td=document.createElement("td");
+    td.textContent=value||"-";
+    row.appendChild(td);
+   });
+
+   const action=document.createElement("td");
+   const payment=document.createElement("select");
+   ["Pending","Verified","Rejected"].forEach(status=>{
+    const option=document.createElement("option");
+    option.value=status;option.textContent=status;payment.appendChild(option);
+   });
+   payment.value=data.paymentStatus||"Pending";
+
+   const admission=document.createElement("select");
+   ["Pending","Approved","Rejected"].forEach(status=>{
+    const option=document.createElement("option");
+    option.value=status;option.textContent=status;admission.appendChild(option);
+   });
+   admission.value=data.applicationStatus||"Pending";
+
+   const save=document.createElement("button");
+   save.type="button";save.textContent="Update";
+   save.addEventListener("click",async()=>{
+    try{
+     requireAdmin();
+     save.disabled=true;
+     await updateDoc(doc(db,"admissions",item.id),{
+      paymentStatus:payment.value,
+      applicationStatus:admission.value
+     });
+     msg.textContent="Application status updated.";
+    }catch(error){
+     msg.textContent="Update failed: "+error.message;
+    }finally{save.disabled=false;}
+   });
+
+   action.append(payment,admission,save);
+   row.appendChild(action);
+   tbody.appendChild(row);
+  });
+
+  msg.textContent="Total Applications: "+snap.size;
+ }catch(error){msg.textContent=error.message;}
+}
+
+$("loadAdmissionsBtn").addEventListener("click",loadAdmissions);
+</script>
+</body>
+</html>
+
