@@ -617,6 +617,28 @@ function requireAdmin(){
 }
 
 async function verifyAdmin(user){
+  
+async function updateDashboardStats(){
+  try {
+    requireAdmin();
+
+    const [students, results, fees, admissions] = await Promise.all([
+      getDocs(collection(db,"students")),
+      getDocs(collection(db,"results")),
+      getDocs(collection(db,"fees")),
+      getDocs(collection(db,"admissions"))
+    ]);
+
+    $("totalStudents").textContent = students.size;
+    $("totalResults").textContent = results.size;
+    $("totalFees").textContent = fees.size;
+    $("totalAdmissions").textContent = admissions.size;
+
+  } catch(error) {
+    console.error("Dashboard Stats Error:", error);
+  }
+}
+
  const userDoc=await getDoc(doc(db,"users",user.uid));
  return userDoc.exists() && userDoc.data().Role==="Admin";
 }
