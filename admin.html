@@ -692,6 +692,7 @@ $("loginForm").addEventListener("submit",async e=>{
   isAdmin=true;
   $("adminLogin").style.display="none";
   $("adminPanel").style.display="block";
+   updateDashboardStats();
   $("adminPanel").scrollIntoView({behavior:"smooth"});
   message("loginMessage","Login सफल!",true);
  }catch(error){
