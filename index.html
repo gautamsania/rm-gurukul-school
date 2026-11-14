@@ -1203,7 +1203,8 @@ async function loadPublicNotices(){
    $("publicNotices").appendChild(item);
   });
  }catch(error){
-  $("publicNotices").innerHTML='<div class="notice">सूचनाएँ अभी लोड नहीं हो सकीं।</div>';
+  $("publicNotices").innerHTML =
+    '<div class="notice">Error: ' + escapeHTML(error.message) + '</div>';
   console.error("Notice load error:",error);
  }
 }
