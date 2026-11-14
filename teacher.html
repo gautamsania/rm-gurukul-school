@@ -50,6 +50,73 @@ footer{text-align:center;padding:20px;color:#64748b}
 </div>
 
 <footer>© 2026–27 R.M. Gurukul Bal Vidya Mandir</footer>
+  
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
+  authDomain: "rmgurukul.firebaseapp.com",
+  projectId: "rmgurukul",
+  storageBucket: "rmgurukul.firebasestorage.app",
+  messagingSenderId: "973124619738",
+  appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3",
+  measurementId: "G-QPL1BR7P8Y"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
+const loginMessage = document.getElementById("loginMessage");
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const email = document.getElementById("teacherEmail").value.trim();
+  const password = document.getElementById("teacherPassword").value;
+
+  try {
+    loginMessage.textContent = "Checking login...";
+
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const userDoc = await getDoc(doc(db, "users", result.user.uid));
+
+    if (!userDoc.exists() ||
+        userDoc.data().Role !== "Teacher") {
+      await signOut(auth);
+      loginMessage.textContent = "Teacher account not authorized.";
+      return;
+    }
+
+    loginBox.hidden = true;
+    dashboard.hidden = false;
+    loginMessage.textContent = "";
+  } catch (error) {
+    loginMessage.textContent = "Login Error: " + error.message;
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await signOut(auth);
+  dashboard.hidden = true;
+  loginBox.hidden = false;
+  document.getElementById("teacherPassword").value = "";
+});
+</script>
+</body>
+</html>
+
 </body>
 </html>
 
