@@ -352,6 +352,51 @@ footer p {
   }
 }
 
+  
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: linear-gradient(145deg, #ffffff, #f8f5ec);
+  border: 1px solid #e4d4ad;
+  border-left: 4px solid #c49a48;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 22px #081b3a12;
+}
+
+.stat-card span {
+  font-size: 28px;
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  border: 0;
+  padding: 0;
+  margin: 8px 0;
+  color: #526078;
+}
+
+.stat-card strong {
+  font-size: 30px;
+  color: #102d55;
+}
+
+@media(max-width:600px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+}
+
 </style>
 </head>
 <body>
