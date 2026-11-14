@@ -663,6 +663,7 @@ onAuthStateChanged(auth,async user=>{
    isAdmin=true;
    $("adminLogin").style.display="none";
    $("adminPanel").style.display="block";
+    updateDashboardStats();
   }else{
    await signOut(auth);
    message("loginMessage","इस खाते को Admin अनुमति नहीं है।");
