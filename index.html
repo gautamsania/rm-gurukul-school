@@ -767,10 +767,8 @@ onAuthStateChanged(auth, async user => {
     }
 
     if(profile.Role === "Admin"){
-      isAdmin = true;
-      $("adminPanel").style.display = "block";
-      $("adminLogin").style.display = "none";
-      $("studentLogin").style.display = "none";
+  window.location.href = "admin.html";
+  return;
     }
     else if(profile.Role === "Student" && profile.StudentId){
       currentStudent = profile;
