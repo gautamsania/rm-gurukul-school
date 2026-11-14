@@ -1,1 +1,55 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Panel | R.M. Gurukul</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f1f5f9;color:#1e293b}
+header{background:#123b70;color:white;padding:22px;text-align:center}
+.container{max-width:850px;margin:25px auto;padding:15px}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 12px #0001;margin-bottom:18px}
+h2{color:#123b70}
+input,button{width:100%;padding:13px;margin:8px 0;border-radius:8px;border:1px solid #cbd5e1}
+button{background:#123b70;color:white;border:0;font-weight:bold}
+.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.menu button{min-height:65px}
+footer{text-align:center;padding:20px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>R.M. Gurukul Bal Vidya Mandir</h1>
+<p>Teacher Portal | शिक्षक पोर्टल</p>
+</header>
+
+<div class="container">
+<div class="card" id="loginBox">
+<h2>Teacher Login</h2>
+<input type="email" id="teacherEmail" placeholder="Teacher Email">
+<input type="password" id="teacherPassword" placeholder="Password">
+<button id="loginBtn">Login</button>
+<p id="loginMessage"></p>
+</div>
+
+<div class="card" id="dashboard" hidden>
+<h2>Teacher Dashboard</h2>
+<p>Welcome, Teacher!</p>
+<div class="menu">
+<button>Students List</button>
+<button>Attendance</button>
+<button>Homework</button>
+<button>Marks Entry</button>
+<button>Notices</button>
+<button>Teacher Profile</button>
+</div>
+<button id="logoutBtn">Logout</button>
+</div>
+</div>
+
+<footer>© 2026–27 R.M. Gurukul Bal Vidya Mandir</footer>
+</body>
+</html>
+
