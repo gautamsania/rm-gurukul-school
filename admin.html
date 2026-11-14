@@ -6,41 +6,352 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel | R.M. Gurukul Bal Vidya Mandir</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Noto Sans Devanagari",sans-serif;background:#f3f6fc;color:#253247;line-height:1.5}
-header{background:linear-gradient(120deg,#071a3b,#123c75,#b38b35);color:white;padding:20px 14px;text-align:center}
-header h1{font-size:clamp(20px,4vw,30px);margin:0}
-header p{margin:5px 0}
-.container{max-width:1100px;margin:25px auto;padding:0 14px}
-.card{background:white;border:1px solid #e5eaf3;border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 8px 25px #102a5615}
-h2,h3{color:#102a56}
-input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;background:white}
-textarea{min-height:90px}
-form{display:grid;gap:11px}
-button,.btn{border:0;border-radius:8px;padding:11px 16px;font-weight:bold;cursor:pointer;background:#1769aa;color:white;font:inherit}
-button:disabled{opacity:.6;cursor:not-allowed}
-.btn-gold{background:#f5b942;color:#172b4d}
-.btn-red{background:#b42318}
-#adminPanel{display:none}
-.admin-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}
-.admin-tabs button{background:#eaf5ff;color:#102a56}
-.admin-tabs button.active{background:#102a56;color:white}
-.admin-page{display:none}
-.admin-page.active{display:block}
-.table-wrap{overflow-x:auto;margin-top:12px}
-table{border-collapse:collapse;width:100%;background:white;min-width:600px}
-th,td{padding:9px;border:1px solid #e2e8f0;text-align:left;vertical-align:top}
-th{background:#eaf5ff;color:#102a56}
-td button,td select{margin:3px;padding:7px;font-size:13px}
-.message{font-weight:bold;margin:10px 0;overflow-wrap:anywhere}
-.small{font-size:13px;color:#64748b}
-footer{text-align:center;background:#102a56;color:white;padding:20px;margin-top:30px}
-@media(max-width:600px){
- .container{margin:15px auto}
- .card{padding:13px}
- .admin-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px}
- .admin-tabs button{white-space:nowrap}
+
+* {
+  box-sizing: border-box;
 }
+
+:root {
+  --navy: #081b3a;
+  --navy-light: #123765;
+  --gold: #d6ad55;
+  --gold-light: #f4dfaa;
+  --bg: #f4f6fb;
+  --text: #24334b;
+  --muted: #718096;
+  --white: #ffffff;
+  --border: #e4e9f1;
+  --shadow: 0 12px 35px rgba(8,27,58,.08);
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+header {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 38px 15px 34px;
+  color: white;
+  background:
+    radial-gradient(circle at 90% 10%, #d6ad5540, transparent 30%),
+    linear-gradient(130deg, #06152e, #102f5b 65%, #76551f);
+  border-bottom: 4px solid var(--gold);
+}
+
+header h1 {
+  font-size: clamp(22px, 4vw, 34px);
+  margin: 0 0 8px;
+  letter-spacing: .4px;
+}
+
+header p {
+  margin: 4px 0;
+  color: #e8edf7;
+}
+
+header strong {
+  display: inline-block;
+  margin-top: 13px;
+  padding: 7px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 30px;
+  color: var(--gold-light);
+  letter-spacing: 1.5px;
+  font-size: 13px;
+}
+
+.container {
+  max-width: 1250px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+h2, h3 {
+  color: var(--navy);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+#adminLogin {
+  max-width: 470px;
+  margin: 45px auto;
+  padding: 32px;
+  border-top: 4px solid var(--gold);
+}
+
+#adminLogin h2 {
+  text-align: center;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d9e0eb;
+  border-radius: 10px;
+  font: inherit;
+  color: var(--text);
+  background: #fbfcff;
+  outline: none;
+  transition: .2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px #d6ad5525;
+  background: white;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+form {
+  display: grid;
+  gap: 13px;
+}
+
+button, .btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 19px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white;
+  font: inherit;
+  transition: transform .2s, box-shadow .2s;
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px #081b3a25;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #b98a35, #e4c477);
+  color: #172746;
+}
+
+.btn-red {
+  background: linear-gradient(135deg, #a51d2d, #d13b45);
+  color: white;
+}
+
+#adminPanel {
+  display: none;
+}
+
+#adminPanel > .card:first-child {
+  background:
+    radial-gradient(circle at 90% 10%, #d6ad5530, transparent 30%),
+    linear-gradient(120deg, #081b3a, #153c70);
+  color: white;
+  border: 1px solid #c5a45e;
+}
+
+#adminPanel > .card:first-child h2 {
+  color: white;
+  font-size: 27px;
+}
+
+#adminPanel > .card:first-child p {
+  color: #e1e9f6;
+}
+
+#adminPanel > .card:first-child button {
+  background: linear-gradient(135deg, #c49a48, #f0d58d);
+  color: #172746;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 13px;
+  margin: 18px 0;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+.admin-tabs button {
+  background: #f0f3f8;
+  color: var(--navy);
+  border: 1px solid #e1e6ef;
+  padding: 11px 17px;
+  white-space: nowrap;
+}
+
+.admin-tabs button.active {
+  background: linear-gradient(135deg, #081b3a, #1b477c);
+  color: white;
+  border-color: var(--gold);
+  box-shadow: 0 5px 14px #081b3a25;
+}
+
+.admin-page {
+  display: none;
+  border-top: 3px solid var(--gold);
+}
+
+.admin-page.active {
+  display: block;
+  animation: appear .25s ease;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+  min-width: 650px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #102d55;
+  color: #f6e5b9;
+  font-size: 14px;
+}
+
+td {
+  font-size: 14px;
+}
+
+tr:hover td {
+  background: #faf8f1;
+}
+
+td button, td select {
+  margin: 3px;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.message {
+  font-weight: bold;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+footer {
+  text-align: center;
+  background: linear-gradient(120deg, #06152e, #153b6d);
+  color: white;
+  padding: 28px 15px;
+  margin-top: 45px;
+  border-top: 4px solid var(--gold);
+}
+
+footer p {
+  color: #d9e2f1;
+  margin: 5px 0;
+}
+
+@media(max-width: 600px) {
+  .container {
+    margin: 17px auto;
+    padding: 0 11px;
+  }
+
+  header {
+    padding: 28px 12px;
+  }
+
+  .card {
+    padding: 17px;
+    border-radius: 14px;
+  }
+
+  #adminLogin {
+    margin: 25px auto;
+    padding: 22px;
+  }
+
+  .admin-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .admin-tabs button {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+
 </style>
 </head>
 <body>
