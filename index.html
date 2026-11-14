@@ -922,6 +922,14 @@ async function loadPublicNotices(){
   transform: translateY(-2px);
 }
 </style>
-
+<script>
+window.addEventListener("load", function(){
+  const loader = document.getElementById("schoolLoader");
+  if(loader){
+    loader.classList.add("hide");
+    setTimeout(() => loader.remove(), 600);
+  }
+});
+</script>
 </body>
 </html>
