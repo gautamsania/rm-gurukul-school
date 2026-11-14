@@ -397,6 +397,81 @@ footer p {
   }
 }
 
+  
+/* Premium Sidebar Layout */
+#adminPanel {
+  display: none;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+#adminPanel > .card:first-child {
+  grid-column: 1 / -1;
+}
+
+#adminPanel > .stats-grid {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+}
+
+#adminPanel > .admin-tabs {
+  grid-column: 1;
+  grid-row: 2 / span 10;
+  position: sticky;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 14px;
+  background: #081b3a;
+  border: 1px solid #c49a48;
+}
+
+#adminPanel > .admin-tabs button {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: #f4dfaa;
+  border: 1px solid #ffffff20;
+}
+
+#adminPanel > .admin-tabs button.active {
+  background: linear-gradient(120deg, #b98a35, #e4c477);
+  color: #081b3a;
+}
+
+#adminPanel > .admin-page {
+  grid-column: 2;
+  grid-row: auto;
+  width: 100%;
+}
+
+@media(max-width:700px) {
+  #adminPanel {
+    grid-template-columns: 1fr;
+  }
+
+  #adminPanel > .stats-grid,
+  #adminPanel > .admin-tabs,
+  #adminPanel > .admin-page {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  #adminPanel > .admin-tabs {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  #adminPanel > .admin-tabs button {
+    width: auto;
+    flex: 0 0 auto;
+  }
+}
+
 </style>
 </head>
 <body>
