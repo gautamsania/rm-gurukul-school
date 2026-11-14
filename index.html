@@ -574,9 +574,6 @@ const message = (id, text, ok=false) => {
  $(id).style.color = ok ? "green" : "crimson";
 };
 
-let isAdmin = false;
-
-
 async function getUserProfile(user){
   if(!user) return null;
 
@@ -590,7 +587,6 @@ async function getUserProfile(user){
 let currentStudent = null;
 
 onAuthStateChanged(auth, async user => {
-  isAdmin = false;
   currentStudent = null;
 
   $("studentDashboard").style.display = "none";
