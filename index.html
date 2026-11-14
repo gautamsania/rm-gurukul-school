@@ -605,7 +605,6 @@ onAuthStateChanged(auth, async user => {
     }
 
     if(profile.Role === "Admin"){
-  window.location.href = "admin.html";
   return;
     }
     else if(profile.Role === "Student" && profile.StudentId){
