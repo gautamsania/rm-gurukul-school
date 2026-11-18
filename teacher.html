@@ -1,122 +1,604 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Panel | R.M. Gurukul</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Teacher Panel | R.M. Gurukul</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f1f5f9;color:#1e293b}
-header{background:#123b70;color:white;padding:22px;text-align:center}
-.container{max-width:850px;margin:25px auto;padding:15px}
-.card{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 12px #0001;margin-bottom:18px}
-h2{color:#123b70}
-input,button{width:100%;padding:13px;margin:8px 0;border-radius:8px;border:1px solid #cbd5e1}
-button{background:#123b70;color:white;border:0;font-weight:bold}
-.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.menu button{min-height:65px}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b}
+header{background:#123b70;color:white;padding:20px;text-align:center}
+header h1{font-size:22px;margin:5px}
+.container{max-width:1100px;margin:auto;padding:15px}
+.card{background:white;padding:18px;border-radius:13px;
+box-shadow:0 3px 12px #0001;margin-bottom:16px}
+h2{color:#123b70;font-size:21px}
+input,select,textarea,button{
+width:100%;padding:12px;margin:7px 0;
+border-radius:8px;border:1px solid #cbd5e1;font-size:15px
+}
+button{background:#123b70;color:white;border:0;font-weight:bold;cursor:pointer}
+button:hover{background:#19539a}
+.menu{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.menu button{min-height:60px}
+.section{display:none}
+.section.active{display:block}
+.message{padding:10px;background:#eff6ff;border-radius:7px;margin:8px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px;border:1px solid #ddd;text-align:left}
+th{background:#eaf1fa}
+.table-wrap{overflow-x:auto}
+.logout{background:#dc2626}
+.back{background:#475569}
 footer{text-align:center;padding:20px;color:#64748b}
+[hidden]{display:none!important}
+@media(min-width:650px){
+.menu{grid-template-columns:repeat(3,1fr)}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>R.M. Gurukul Bal Vidya Mandir</h1>
-<p>Teacher Portal | शिक्षक पोर्टल</p>
+<p>Advanced Teacher Portal | शिक्षक पोर्टल</p>
 </header>
 
 <div class="container">
+
+<!-- LOGIN -->
 <div class="card" id="loginBox">
 <h2>Teacher Login</h2>
-<input type="email" id="teacherEmail" placeholder="Teacher Email">
-<input type="password" id="teacherPassword" placeholder="Password">
+<input type="email" id="teacherEmail" placeholder="Teacher Email" required>
+<input type="password" id="teacherPassword" placeholder="Password" required>
 <button id="loginBtn">Login</button>
 <p id="loginMessage"></p>
 </div>
 
-<div class="card" id="dashboard" hidden>
-<h2>Teacher Dashboard</h2>
-<p>Welcome, Teacher!</p>
+<!-- DASHBOARD -->
+<div id="dashboard" hidden>
+
+<div class="card">
+<h2>Welcome, <span id="teacherName">Teacher</span>!</h2>
+<p>R.M. Gurukul Teacher Dashboard</p>
+
 <div class="menu">
-<button>Students List</button>
-<button>Attendance</button>
-<button>Homework</button>
-<button>Marks Entry</button>
-<button>Notices</button>
-<button>Teacher Profile</button>
+<button data-view="home">🏠 Dashboard</button>
+<button data-view="students">👨‍🎓 Student List</button>
+<button data-view="attendance">📅 Attendance</button>
+<button data-view="homework">📚 Homework</button>
+<button data-view="marks">📝 Marks Entry</button>
+<button data-view="results">🏆 Student Result</button>
+<button data-view="notices">📢 Notices</button>
+<button data-view="reports">📊 Class Report</button>
+<button data-view="profile">👤 Teacher Profile</button>
+<button data-view="password">🔐 Change Password</button>
 </div>
-<button id="logoutBtn">Logout</button>
+</div>
+
+<!-- HOME -->
+<div class="section active" id="home">
+<div class="card">
+<h2>Dashboard Overview</h2>
+<p>Total Students: <b id="totalStudents">0</b></p>
+<p>Total Homework: <b id="totalHomework">0</b></p>
+<p>Total Marks Records: <b id="totalMarks">0</b></p>
+<p>Total Notices: <b id="totalNotices">0</b></p>
+<button id="refreshBtn">🔄 Refresh Data</button>
+</div>
+</div>
+
+<!-- STUDENTS -->
+<div class="section" id="students">
+<div class="card">
+<h2>Student List</h2>
+<button id="loadStudents">Load Students</button>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Name</th><th>Class</th><th>Roll</th><th>Student ID</th></tr></thead>
+<tbody id="studentTable"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ATTENDANCE -->
+<div class="section" id="attendance">
+<div class="card">
+<h2>Student Attendance</h2>
+<form id="attendanceForm">
+<input type="date" id="attDate" required>
+<input id="attStudent" placeholder="Student Name" required>
+<input id="attId" placeholder="Student ID / Roll Number">
+<input id="attClass" placeholder="Class" required>
+<select id="attStatus" required>
+<option value="">Select Attendance</option>
+<option>Present</option>
+<option>Absent</option>
+<option>Late</option>
+</select>
+<button type="submit">Save Attendance</button>
+</form>
+</div>
+</div>
+
+<!-- HOMEWORK -->
+<div class="section" id="homework">
+<div class="card">
+<h2>Upload Homework</h2>
+<form id="homeworkForm">
+<input id="hwTitle" placeholder="Homework Title" required>
+<input id="hwClass" placeholder="Class" required>
+<input id="hwSubject" placeholder="Subject" required>
+<textarea id="hwDescription" placeholder="Homework Details" required></textarea>
+<label>Last Date</label>
+<input type="date" id="hwDate">
+<button type="submit">Upload Homework</button>
+</form>
+</div>
+<div class="card">
+<h2>Homework Records</h2>
+<div id="homeworkList"></div>
+</div>
+</div>
+
+<!-- MARKS -->
+<div class="section" id="marks">
+<div class="card">
+<h2>Online Marks Entry</h2>
+<form id="marksForm">
+<input id="markStudent" placeholder="Student Name" required>
+<input id="markId" placeholder="Student ID / Roll Number">
+<input id="markClass" placeholder="Class" required>
+<input id="markSubject" placeholder="Subject" required>
+<input id="markExam" placeholder="Exam Name" required>
+<input type="number" id="markTotal" placeholder="Total Marks" min="1" required>
+<input type="number" id="markObtained" placeholder="Obtained Marks" min="0" required>
+<button type="submit">Save Marks</button>
+</form>
+</div>
+</div>
+
+<!-- RESULTS -->
+<div class="section" id="results">
+<div class="card">
+<h2>Student Results</h2>
+<input id="resultSearch" placeholder="Search Student Name / Class">
+<button id="loadResults">Show Results</button>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Student</th><th>Class</th><th>Subject</th><th>Exam</th><th>Marks</th><th>Percentage</th></tr></thead>
+<tbody id="resultTable"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- NOTICES -->
+<div class="section" id="notices">
+<div class="card">
+<h2>Publish Notice</h2>
+<form id="noticeForm">
+<input id="noticeTitle" placeholder="Notice Title" required>
+<input id="noticeClass" placeholder="Class (All या 6, 7, 8 आदि)" value="All">
+<textarea id="noticeMessage" placeholder="Notice Details" required></textarea>
+<button type="submit">Publish Notice</button>
+</form>
+</div>
+<div class="card">
+<h2>Published Notices</h2>
+<div id="noticeList"></div>
+</div>
+</div>
+
+<!-- REPORT -->
+<div class="section" id="reports">
+<div class="card">
+<h2>Class-wise Report</h2>
+<input id="reportClass" placeholder="Enter Class">
+<button id="generateReport">Generate Report</button>
+<div id="reportOutput"></div>
+</div>
+</div>
+
+<!-- PROFILE -->
+<div class="section" id="profile">
+<div class="card">
+<h2>Teacher Profile</h2>
+<p>Name: <b id="profileName">-</b></p>
+<p>Email: <b id="profileEmail">-</b></p>
+<p>Role: <b>Teacher</b></p>
+<p>Teacher ID: <b id="profileId">-</b></p>
+</div>
+</div>
+
+<!-- PASSWORD -->
+<div class="section" id="password">
+<div class="card">
+<h2>Change Password</h2>
+<form id="passwordForm">
+<input type="password" id="newPassword" placeholder="New Password (Minimum 6 characters)" minlength="6" required>
+<input type="password" id="confirmPassword" placeholder="Confirm New Password" required>
+<button type="submit">Update Password</button>
+</form>
+</div>
+</div>
+
+<button class="logout" id="logoutBtn">Logout</button>
 </div>
 </div>
 
 <footer>© 2026–27 R.M. Gurukul Bal Vidya Mandir</footer>
-  
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+ getAuth, signInWithEmailAndPassword, signOut, updatePassword
+}
+from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
 import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+ getFirestore, doc, getDoc, collection, getDocs,
+ addDoc, serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
-  authDomain: "rmgurukul.firebaseapp.com",
-  projectId: "rmgurukul",
-  storageBucket: "rmgurukul.firebasestorage.app",
-  messagingSenderId: "973124619738",
-  appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3",
-  measurementId: "G-QPL1BR7P8Y"
+ apiKey: "AIzaSyC18a9-iPClCKmwh_Utra0GYnqEB6ARNFU",
+ authDomain: "rmgurukul.firebaseapp.com",
+ projectId: "rmgurukul",
+ storageBucket: "rmgurukul.firebasestorage.app",
+ messagingSenderId: "973124619738",
+ appId: "1:973124619738:web:b1c3a45f4a8e85eb71c4e3",
+ measurementId: "G-QPL1BR7P8Y"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const loginBox = document.getElementById("loginBox");
-const dashboard = document.getElementById("dashboard");
-const loginMessage = document.getElementById("loginMessage");
+let currentTeacher = null;
+let students = [];
+let homework = [];
+let marks = [];
+let notices = [];
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
-  const email = document.getElementById("teacherEmail").value.trim();
-  const password = document.getElementById("teacherPassword").value;
+const $ = id => document.getElementById(id);
 
-  try {
-    loginMessage.textContent = "Checking login...";
+function safe(value){
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    const userDoc = await getDoc(doc(db, "users", result.user.uid));
+function studentName(s){
+ return s.name || s.Name || s.studentName || s.StudentName || "-";
+}
+function studentClass(s){
+ return s.class || s.Class || s.className || "-";
+}
+function studentRoll(s){
+ return s.roll || s.Roll || s.rollNumber || "-";
+}
 
-    if (!userDoc.exists() ||
-        userDoc.data().Role !== "Teacher") {
-      await signOut(auth);
-      loginMessage.textContent = "Teacher account not authorized.";
-      return;
-    }
+function message(text){
+ alert(text);
+}
 
-    loginBox.hidden = true;
-    dashboard.hidden = false;
-    loginMessage.textContent = "";
-  } catch (error) {
-    loginMessage.textContent = "Login Error: " + error.message;
+// LOGIN
+$("loginBtn").addEventListener("click",async()=>{
+ const email=$("teacherEmail").value.trim();
+ const password=$("teacherPassword").value;
+
+ if(!email || !password){
+  $("loginMessage").textContent="Email और Password भरें";
+  return;
+ }
+
+ try{
+  $("loginMessage").textContent="Checking Login...";
+
+  const result=await signInWithEmailAndPassword(auth,email,password);
+  const userDoc=await getDoc(doc(db,"users",result.user.uid));
+
+  if(!userDoc.exists() || userDoc.data().Role!=="Teacher"){
+   await signOut(auth);
+   $("loginMessage").textContent="Teacher account not authorized.";
+   return;
   }
+
+  currentTeacher=result.user;
+
+  const data=userDoc.data();
+  const name=data.Name || data.name || "Teacher";
+
+  $("teacherName").textContent=name;
+  $("profileName").textContent=name;
+  $("profileEmail").textContent=result.user.email || "-";
+  $("profileId").textContent=result.user.uid;
+
+  $("loginBox").hidden=true;
+  $("dashboard").hidden=false;
+  $("loginMessage").textContent="";
+
+  await refreshData();
+
+ }catch(error){
+  $("loginMessage").textContent="Login Error: "+error.message;
+ }
 });
 
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await signOut(auth);
-  dashboard.hidden = true;
-  loginBox.hidden = false;
-  document.getElementById("teacherPassword").value = "";
+// NAVIGATION
+document.querySelectorAll("[data-view]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  $(button.dataset.view).classList.add("active");
+ });
 });
+
+// FIRESTORE READ
+async function readCollection(name){
+ const snap=await getDocs(collection(db,name));
+ return snap.docs.map(d=>({id:d.id,...d.data()}));
+}
+
+async function refreshData(){
+ try{
+  [students,homework,marks,notices]=await Promise.all([
+   readCollection("students"),
+   readCollection("homework"),
+   readCollection("marks"),
+   readCollection("notices")
+  ]);
+
+  $("totalStudents").textContent=students.length;
+  $("totalHomework").textContent=homework.length;
+  $("totalMarks").textContent=marks.length;
+  $("totalNotices").textContent=notices.length;
+
+  renderStudents();
+  renderHomework();
+  renderResults();
+  renderNotices();
+
+ }catch(error){
+  message("Data Load Error: "+error.message);
+ }
+}
+
+$("refreshBtn").addEventListener("click",refreshData);
+$("loadStudents").addEventListener("click",async()=>{
+ await refreshData();
+});
+
+// STUDENTS
+function renderStudents(){
+ $("studentTable").innerHTML=students.map(s=>`
+ <tr>
+ <td>${safe(studentName(s))}</td>
+ <td>${safe(studentClass(s))}</td>
+ <td>${safe(studentRoll(s))}</td>
+ <td>${safe(s.id)}</td>
+ </tr>`).join("") || "<tr><td colspan='4'>No students found</td></tr>";
+}
+
+// ATTENDANCE
+$("attDate").value=new Date().toISOString().slice(0,10);
+
+$("attendanceForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  await addDoc(collection(db,"attendance"),{
+   date:$("attDate").value,
+   studentName:$("attStudent").value.trim(),
+   studentId:$("attId").value.trim(),
+   class:$("attClass").value.trim(),
+   status:$("attStatus").value,
+   teacherUid:currentTeacher.uid,
+   teacherEmail:currentTeacher.email,
+   createdAt:serverTimestamp()
+  });
+
+  message("Attendance saved successfully!");
+  e.target.reset();
+  $("attDate").value=new Date().toISOString().slice(0,10);
+ }catch(error){message(error.message);}
+});
+
+// HOMEWORK
+$("homeworkForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ try{
+  await addDoc(collection(db,"homework"),{
+   title:$("hwTitle").value.trim(),
+   class:$("hwClass").value.trim(),
+   subject:$("hwSubject").value.trim(),
+   description:$("hwDescription").value.trim(),
+   dueDate:$("hwDate").value,
+   teacherUid:currentTeacher.uid,
+   teacherEmail:currentTeacher.email,
+   createdAt:serverTimestamp()
+  });
+
+  message("Homework uploaded!");
+  e.target.reset();
+  await refreshData();
+ }catch(error){message(error.message);}
+});
+
+function renderHomework(){
+ $("homeworkList").innerHTML=homework.map(h=>`
+ <div class="message">
+ <b>${safe(h.title)}</b><br>
+ Class: ${safe(h.class)} | Subject: ${safe(h.subject)}<br>
+ ${safe(h.description)}<br>
+ Last Date: ${safe(h.dueDate)}
+ </div>`).join("") || "No homework found";
+}
+
+// MARKS
+$("marksForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const total=Number($("markTotal").value);
+ const obtained=Number($("markObtained").value);
+
+ if(total<=0 || obtained<0 || obtained>total){
+  message("Marks सही भरें। Obtained Marks, Total Marks से अधिक नहीं हो सकते।");
+  return;
+ }
+
+ try{
+  await addDoc(collection(db,"marks"),{
+   studentName:$("markStudent").value.trim(),
+   studentId:$("markId").value.trim(),
+   class:$("markClass").value.trim(),
+   subject:$("markSubject").value.trim(),
+   exam:$("markExam").value.trim(),
+   totalMarks:total,
+   obtainedMarks:obtained,
+   percentage:Number((obtained/total*100).toFixed(2)),
+   teacherUid:currentTeacher.uid,
+   createdAt:serverTimestamp()
+  });
+
+  message("Marks saved successfully!");
+  e.target.reset();
+  await refreshData();
+ }catch(error){message(error.message);}
+});
+
+// RESULTS
+function renderResults(){
+ const search=($("resultSearch").value || "").toLowerCase();
+
+ const filtered=marks.filter(m=>
+  (m.studentName || "").toLowerCase().includes(search) ||
+  String(m.class || "").toLowerCase().includes(search)
+ );
+
+ $("resultTable").innerHTML=filtered.map(m=>{
+  const percent=m.percentage ?? (
+   Number(m.totalMarks)>0 ?
+   (Number(m.obtainedMarks)/Number(m.totalMarks)*100).toFixed(2):0
+  );
+
+  return `<tr>
+  <td>${safe(m.studentName)}</td>
+  <td>${safe(m.class)}</td>
+  <td>${safe(m.subject)}</td>
+  <td>${safe(m.exam)}</td>
+  <td>${safe(m.obtainedMarks)} / ${safe(m.totalMarks)}</td>
+  <td>${safe(percent)}%</td>
+  </tr>`;
+ }).join("") || "<tr><td colspan='6'>No results found</td></tr>";
+}
+
+$("loadResults").addEventListener("click",renderResults);
+$("resultSearch").addEventListener("input",renderResults);
+
+// NOTICES
+$("noticeForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ try{
+  await addDoc(collection(db,"notices"),{
+   title:$("noticeTitle").value.trim(),
+   targetClass:$("noticeClass").value.trim() || "All",
+   message:$("noticeMessage").value.trim(),
+   teacherUid:currentTeacher.uid,
+   teacherEmail:currentTeacher.email,
+   createdAt:serverTimestamp()
+  });
+
+  message("Notice published successfully!");
+  e.target.reset();
+  $("noticeClass").value="All";
+  await refreshData();
+
+ }catch(error){message(error.message);}
+});
+
+function renderNotices(){
+ $("noticeList").innerHTML=notices.map(n=>`
+ <div class="message">
+ <b>${safe(n.title)}</b><br>
+ Class: ${safe(n.targetClass)}<br>
+ ${safe(n.message)}
+ </div>`).join("") || "No notices found";
+}
+
+// CLASS REPORT
+$("generateReport").addEventListener("click",()=>{
+ const cls=$("reportClass").value.trim().toLowerCase();
+
+ if(!cls){message("Class भरें");return;}
+
+ const classStudents=students.filter(s=>
+  String(studentClass(s)).toLowerCase()===cls
+ );
+
+ const classMarks=marks.filter(m=>
+  String(m.class || "").toLowerCase()===cls
+ );
+
+ $("reportOutput").innerHTML=`
+ <div class="message">
+ <p>Class: ${safe(cls)}</p>
+ <p>Total Students: <b>${classStudents.length}</b></p>
+ <p>Total Marks Records: <b>${classMarks.length}</b></p>
+ </div>`;
+});
+
+// CHANGE PASSWORD
+$("passwordForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const p1=$("newPassword").value;
+ const p2=$("confirmPassword").value;
+
+ if(p1!==p2){
+  message("दोनों Password समान होने चाहिए");
+  return;
+ }
+
+ if(p1.length<6){
+  message("Password कम से कम 6 characters का होना चाहिए");
+  return;
+ }
+
+ try{
+  await updatePassword(currentTeacher,p1);
+  message("Password updated successfully!");
+  e.target.reset();
+ }catch(error){
+  if(error.code==="auth/requires-recent-login"){
+   message("Password बदलने के लिए दोबारा Login करें।");
+  }else{
+   message(error.message);
+  }
+ }
+});
+
+// LOGOUT
+$("logoutBtn").addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+  currentTeacher=null;
+  $("dashboard").hidden=true;
+  $("loginBox").hidden=false;
+  $("teacherPassword").value="";
+  $("loginMessage").textContent="Successfully logged out.";
+ }catch(error){message(error.message);}
+});
+
 </script>
 </body>
 </html>
-
-</body>
-</html>
-
